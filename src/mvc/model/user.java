@@ -15,21 +15,6 @@ public class user implements Serializable {
     public user() {
     }
 
-    public user(int idUser , String password){
-        this.idUser = idUser;
-        this.password = password;
-    }
-
-    public user(int idUser, String password, boolean flagBan, int userType, String mail) {
-        this.idUser = idUser;
-        this.password = password;
-        this.flagBan = flagBan;
-        this.userType = userType;
-        this.mail = mail;
-    }
-
-
-
     /*-------------------------- Getters and Setters  -------------------------------*/
 
     public int getIdUser() {

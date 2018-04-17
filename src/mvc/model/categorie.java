@@ -17,14 +17,6 @@ public class categorie implements Serializable {
     public categorie() {
     }
 
-    public categorie(String nom, String color, Set<user> users) {
-        this.nom = nom;
-        this.color = color;
-        this.users = users;
-    }
-
-
-
     /*-------------------------- Getters and Setters  -------------------------------*/
 
     public String getNom() {

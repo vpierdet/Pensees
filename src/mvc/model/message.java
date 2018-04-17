@@ -16,7 +16,7 @@ public class message implements Serializable{
     private int agree = 0;
     private int disagree = 0;
 
-    private Set<user> destinataires = new HashSet<user>();
+    private Set<user> destinataires = new HashSet<>();
     private Set<categorie> categories = new HashSet<>();
 
     private boolean flagModeration = false;
@@ -28,30 +28,6 @@ public class message implements Serializable{
     /*-------------------------------- Constructeurs  -------------------------------*/
 
     public message() {
-    }
-
-    public message(String text, int idUser, Set<user> destinataires, Set<categorie> categories, Timestamp date) {
-        this.text = text;
-        this.idUser = idUser;
-        this.destinataires = destinataires;
-        this.categories = categories;
-        this.date = date;
-    }
-
-    public message(String text, int idMessage, int idUser, int idReponse, int agree, int disagree, Set<user> destinataires,
-                   Set<categorie> categories, boolean flagModeration, boolean resolu, boolean flagNotif, Timestamp date) {
-        this.text = text;
-        this.idMessage = idMessage;
-        this.idUser = idUser;
-        this.idReponse = idReponse;
-        this.agree = agree;
-        this.disagree = disagree;
-        this.destinataires = destinataires;
-        this.categories = categories;
-        this.flagModeration = flagModeration;
-        this.resolu = resolu;
-        this.flagNotif = flagNotif;
-        this.date = date;
     }
 
     /*-------------------------- Getters and Setters  -------------------------------*/

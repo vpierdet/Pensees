@@ -11,22 +11,9 @@ public class answer implements Serializable{
     private int idMessage = 0;
     private int idUser = 0;
     private Timestamp date;
-    /*-------------------------------- Constructeurs  -------------------------------*/
+    /*-------------------------------- Constructeur  -------------------------------*/
 
     public answer() {
-    }
-
-    public answer(String txt, int idMessage, int idUser, Timestamp date, int idReponse) {
-        this.txt = txt;
-        this.idMessage = idMessage;
-        this.idUser = idUser;
-        this.date = date;
-        this.idReponse = idReponse;
-    }
-
-    public answer(String txt, int idMessage) {
-        this.txt = txt;
-        this.idMessage = idMessage;
     }
 
     /*-------------------------- Getters and Setters  -------------------------------*/
