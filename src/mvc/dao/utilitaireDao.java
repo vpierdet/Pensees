@@ -18,6 +18,7 @@ public class utilitaireDao {
         return preparedStatement;
     }
 
+
     /* Fermeture silencieuse du resultset */
     public static void fermetureSilencieuse( ResultSet resultSet ) {
         if ( resultSet != null ) {
@@ -64,16 +65,6 @@ public class utilitaireDao {
         fermetureSilencieuse( connexion );
     }
 
-    private static user map(ResultSet resultSet ) throws SQLException {
-        user user1 = new user();
-        user1.setUserType(resultSet.getInt("UserType"));
-        user1.setPassword(resultSet.getNString("password"));
-        user1.setIdUser(resultSet.getInt("IdUser"));
-        user1.setMail(resultSet.getString("Mail"));
-        user1.setUsername(resultSet.getString("Username"));
-        user1.setFlagBan(resultSet.getBoolean("FlagBan"));
 
-        return user1;
-    }
 
 }
