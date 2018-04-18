@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import mvc.dao.userDao;
 import mvc.dao.DAOFactory;
@@ -28,9 +30,12 @@ public class CheckLoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         user userFound = FindUser(request);
-
         if (userFound == null){
-
+            System.out.println("chit");
+        }
+        else{
+            PrintWriter out = response.getWriter();
+            out.print(userFound.getUsername() +"     "+ userFound.getMail());
         }
 
 
@@ -42,8 +47,8 @@ public class CheckLoginServlet extends HttpServlet {
     }
 
     private user FindUser(HttpServletRequest request) {
-        String usernameForm = (String) request.getAttribute("username");
-        String passwordForm = (String) request.getAttribute("password");
+        String usernameForm = (String) request.getParameter("username");
+        String passwordForm = (String) request.getParameter("password");
         user userFound = ud.trouver(usernameForm);
         return userFound;
 
