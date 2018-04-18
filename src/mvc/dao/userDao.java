@@ -1,7 +1,11 @@
 package mvc.dao;
 
-public class userDao {
+import mvc.model.user;
 
+public interface  userDao {
 
+    user trouver(String username) throws DAOException;
+
+    void modifier(String colunm, Object value) throws DAOException;
 
 }

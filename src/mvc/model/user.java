@@ -10,6 +10,7 @@ public class user implements Serializable {
     private boolean flagBan = false;
     private int userType = 0;
     private String mail = "";
+    private String username = "";
     /*-------------------------------- Constructeurs  -------------------------------*/
 
     public user() {
@@ -57,7 +58,13 @@ public class user implements Serializable {
         this.mail = mail;
     }
 
+    public String getUsername() {
+        return username;
+    }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
 }
 
