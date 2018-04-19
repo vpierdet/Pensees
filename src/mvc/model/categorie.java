@@ -11,6 +11,7 @@ public class categorie implements Serializable {
     private String nom = "";
     private String color = "";
     private Set<user> users = new HashSet<>();
+    private int idCategorie = 0;
 
     /*-------------------------------- Constructeurs  -------------------------------*/
 
@@ -35,14 +36,19 @@ public class categorie implements Serializable {
         this.color = color;
     }
 
-    public Set<user> getCategories() {
+    public Set<user> getUsers() {
         return users;
     }
 
-    public void setCategories(Set<user> categories) {
-        this.users = categories;
+    public void setUsers(Set<user> users) {
+        this.users = users;
     }
 
+    public int getIdCategorie() {
+        return idCategorie;
+    }
 
-
+    public void setIdCategorie(int idCategorie) {
+        this.idCategorie = idCategorie;
+    }
 }
