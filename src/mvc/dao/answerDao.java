@@ -9,8 +9,8 @@ public interface answerDao {
     void ajouter(answer ans)throws DAOException;
     void supprimer(answer ans)throws DAOException;
     void modifier(answer ans)throws DAOException;
-    ArrayList<answer> trouverReponses(int idUser)throws DAOException;
-    ArrayList<answer> trouverReponse(int idMessage)throws DAOException;
+    ArrayList<answer> trouverReponseIdUser(int idUser)throws DAOException;
+    answer trouverReponseIdMessage(int idMessage)throws DAOException;
 
 
 }

@@ -8,9 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class messageDaoImpl implements messageDao{
-
     private DAOFactory daoFactory;
-    messageDaoImpl (DAOFactory daoFactory){this.daoFactory = daoFactory;}
     private static final String SQL_UPDATE_ADD = "";
     private static final String SQL_UPDATE_DELETE = "";
     private static final String SQL_UPDATE_MODIFY = "";
@@ -20,6 +18,8 @@ public class messageDaoImpl implements messageDao{
     private static final String SQL_SELECT_IDMES = "";
 
 
+
+    messageDaoImpl (DAOFactory daoFactory){this.daoFactory = daoFactory;}
     /**
      * permet d'ajouter un message a la base de données
      *
@@ -105,14 +105,14 @@ public class messageDaoImpl implements messageDao{
 
     private static message map(ResultSet resultSet) throws SQLException{
         message mes = new message();
-        mes.setCategories(resultSet.getString(""));
-        mes.setDestinataires(resultSet.getString(""));
+        mes.setCategories(resultSet.getString("Categories"));
+        mes.setDestinataires(resultSet.getString("Destinataires"));
         mes.setDisagree(resultSet.getInt("disagree"));
         mes.setAgree(resultSet.getInt("Agree"));
         mes.setFlagModeration(resultSet.getBoolean("FlagModeration"));
         mes.setIdMessage(resultSet.getInt("IdMessage"));
-        mes.setIdReponse(resultSet.getInt(""));
-        mes.setResolu(resultSet.getBoolean(""));
+        mes.setIdReponse(resultSet.getInt("IdAnswer"));
+        mes.setResolu(resultSet.getBoolean("FlagAnswer"));
         mes.setIdUser(resultSet.getInt("IdUser"));
         mes.setFlagNotif(resultSet.getBoolean("FlagNotif"));
         mes.setText(resultSet.getString("TextMessage"));

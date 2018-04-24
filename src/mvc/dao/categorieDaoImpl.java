@@ -4,7 +4,15 @@ import mvc.model.categorie;
 
 public class categorieDaoImpl implements categorieDao{
     private DAOFactory daoFactory;
+    private static final String SQL_UPDATE_ADD = "";
+    private static final String SQL_UPDATE_DELETE = "";
+    private static final String SQL_UPDATE_MODIFY = "";
+    private static final String SQL_SELECT_NAME= "";
+
+
     categorieDaoImpl (DAOFactory daoFactory){this.daoFactory = daoFactory;}
+
+
 
 
     @Override
