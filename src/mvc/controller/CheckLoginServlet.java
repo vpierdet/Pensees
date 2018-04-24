@@ -31,14 +31,12 @@ public class CheckLoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         user userFound = FindUser(request);
         if (userFound == null){
-            System.out.println("chit");
+            System.out.println("utilisateur non trouvé");
         }
         else{
             PrintWriter out = response.getWriter();
             out.print(userFound.getUsername() +"     "+ userFound.getMail());
         }
-
-
 
     }
 

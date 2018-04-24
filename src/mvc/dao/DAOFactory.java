@@ -78,6 +78,13 @@ public class DAOFactory {
     public userDao getUserDao() {
         return new userDaoImpl( this );
     }
+    public answerDao getAnswerDao() { return new answerDaoImpl( this );}
+    public categorieDao getCategorierDao() {
+        return new categorieDaoImpl( this );
+    }
+    public messageDao getMessageDao() {
+        return new messageDaoImpl( this );
+    }
 
 
 }

@@ -2,6 +2,8 @@ package mvc.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -88,12 +90,37 @@ public class message implements Serializable{
         this.destinataires = destinataires;
     }
 
+    public void setDestinataires(String s){
+        Set<String> listNom = new HashSet<>();
+        Collections.addAll(listNom, s.split(","));
+        Set<user> destinataires = new HashSet<>();
+        for (String e : listNom){
+           user user1 = new user();
+           user1.setUsername(e);
+           destinataires.add(user1);
+        }
+        this.destinataires = destinataires;
+    }
+
     public Set<categorie> getCategories() {
         return categories;
     }
 
     public void setCategories(Set<categorie> categories) {
         this.categories = categories;
+    }
+
+    public void setCategories(String s){
+        Set<String> listNom = new HashSet<>();
+        Collections.addAll(listNom, s.split(","));
+        Set<categorie> listcategorie = new HashSet<>();
+        for (String e : listNom){
+            categorie cat = new categorie();
+            cat.setNom(e);
+            listcategorie.add(cat);
+        }
+        this.categories = listcategorie;
+
     }
 
     public boolean isFlagModeration() {
@@ -127,8 +154,6 @@ public class message implements Serializable{
     public void setTimestamp(Timestamp date) {
         this.date = date;
     }
-
-
 
 
 }

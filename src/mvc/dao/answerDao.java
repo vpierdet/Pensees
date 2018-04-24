@@ -5,6 +5,7 @@ import mvc.model.answer;
 import java.util.ArrayList;
 
 public interface answerDao {
+
     void ajouter(answer ans)throws DAOException;
     void supprimer(answer ans)throws DAOException;
     void modifier(answer ans)throws DAOException;
