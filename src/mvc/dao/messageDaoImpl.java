@@ -3,6 +3,9 @@ package mvc.dao;
 import com.sun.deploy.util.ArrayUtil;
 import mvc.model.message;
 import static mvc.dao.utilitaireDao.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,7 +18,7 @@ public class messageDaoImpl implements messageDao{
     private static final String SQL_SELECT_PERTINENCE = "";
     private static final String SQL_SELECT_DATE = "";
     private static final String SQL_SELECT_AUTHOR = "";
-    private static final String SQL_SELECT_IDMES = "";
+    private static final String SQL_SELECT_IDMES = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date FROM Message WHERE IdUser = ?;";
 
 
 
@@ -100,7 +103,27 @@ public class messageDaoImpl implements messageDao{
      */
     @Override
     public message trouverMessage(int idMessage) throws DAOException {
-        return null;
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        message mes = null;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_IDMES, false, idMessage );
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if ( resultSet.next() ) {
+                mes = map( resultSet );
+            }
+        } catch ( SQLException e ) {
+            throw new DAOException( e );
+        } finally {
+            fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+        }
+        return mes;
+
+
     }
 
     private static message map(ResultSet resultSet) throws SQLException{
