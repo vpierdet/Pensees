@@ -17,7 +17,6 @@ public class MessageServlet extends HttpServlet {
     private messageDao md;
 
     public void init() throws ServletException {
-        /* Récupération d'une instance de notre DAO Utilisateur */
         this.md = ( (DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getMessageDao();
     }
 

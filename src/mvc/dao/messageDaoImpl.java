@@ -1,7 +1,7 @@
 package mvc.dao;
 
-import com.sun.deploy.util.ArrayUtil;
 import mvc.model.message;
+import mvc.model.categorie;
 import static mvc.dao.utilitaireDao.*;
 
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class messageDaoImpl implements messageDao{
     private DAOFactory daoFactory;
-    private static final String SQL_UPDATE_ADD = "";
+    private static final String SQL_UPDATE_ADD = "INSERT INTO Message(TextMessage, IdUser, FlagModeration, Agree, Disagree, FlagAnswer, Date, Destinataires,Categories) VALUES(?,?,?,?,?,?,NOW(),?,?)";
     private static final String SQL_UPDATE_DELETE = "";
     private static final String SQL_UPDATE_MODIFY = "";
     private static final String SQL_SELECT_PERTINENCE = "";
@@ -31,7 +31,19 @@ public class messageDaoImpl implements messageDao{
      */
     @Override
     public void ajouter(message mes) throws DAOException {
-
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_ADD, false,mes.getText(),mes.getIdUser(),mes.isFlagModeration(), mes.getAgree(), mes.getDisagree(), mes.isResolu(), 2, mes.getCategories() );
+            preparedStatement.executeUpdate();
+        } catch ( SQLException e ) {
+            throw new DAOException( e );
+        } finally {
+            fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+        }
     }
 
     /**
@@ -128,7 +140,9 @@ public class messageDaoImpl implements messageDao{
 
     private static message map(ResultSet resultSet) throws SQLException{
         message mes = new message();
-        mes.setCategories(resultSet.getString("Categories"));
+        categorie cat = new categorie();
+        cat.setNom(resultSet.getString("Categories"));
+        mes.setCategories(cat);
         mes.setDestinataires(resultSet.getString("Destinataires"));
         mes.setDisagree(resultSet.getInt("disagree"));
         mes.setAgree(resultSet.getInt("Agree"));
@@ -142,8 +156,6 @@ public class messageDaoImpl implements messageDao{
         mes.setTimestamp(resultSet.getTimestamp("Date"));
         return  mes;
     }
-
-
 
 
 }
