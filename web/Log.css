@@ -1,0 +1,41 @@
+@CHARSET "ISO-8859-1";
+
+form{
+    font-family: "Comic Sans MS";
+    font-size: larger;
+}
+.contour {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    border: solid rgb(5, 100, 163);
+    border-bottom-left-radius: 20px 20px;
+    border-bottom-right-radius: 20px 20px;
+    border-top-left-radius: 20px 20px;
+    border-top-right-radius: 20px 20px;
+}
+
+input{
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid rgb(149, 189, 216);
+    border-bottom-left-radius: 5px 5px;
+    border-bottom-right-radius: 5px 5px;
+    border-top-left-radius: 5px 5px;
+    border-top-right-radius: 5px 5px;
+
+}
+
+.bandeau{
+    display:block;
+    width:1500px;
+    height:400px;
+    background-position:50% 50%;
+}
+
+.logo{
+    float:right;
+    height : 50%;
+    width : 50%;
+}
