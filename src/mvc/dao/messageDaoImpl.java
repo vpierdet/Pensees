@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class messageDaoImpl implements messageDao{
     private DAOFactory daoFactory;
     private static final String SQL_UPDATE_ADD = "INSERT INTO Message(TextMessage, IdUser, FlagModeration, Agree, Disagree, FlagAnswer, Date, Destinataires,Categories) VALUES(?,?,?,?,?,?,NOW(),?,?)";
+    private static final String SQL_SELECT_MODER = "";
     private static final String SQL_UPDATE_DELETE = "";
     private static final String SQL_UPDATE_MODIFY = "";
     private static final String SQL_SELECT_PERTINENCE = "";
@@ -37,8 +38,8 @@ public class messageDaoImpl implements messageDao{
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = daoFactory.getConnection();
-            preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_ADD, false,mes.getText(),mes.getIdUser(),mes.isFlagModeration(), mes.getAgree(), mes.getDisagree(), mes.isResolu(), 2, mes.getCategories() );
-            preparedStatement.executeUpdate();
+            preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_ADD, true,mes.getText(),mes.getIdUser(),mes.isFlagModeration(), mes.getAgree(), mes.getDisagree(), mes.isResolu(), 2, mes.getCategories() );
+            int i = preparedStatement.executeUpdate();
         } catch ( SQLException e ) {
             throw new DAOException( e );
         } finally {
@@ -67,6 +68,8 @@ public class messageDaoImpl implements messageDao{
     public void modifier(message mes) throws DAOException {
 
     }
+
+
 
     /**
      * permet de choisir la tranche de messages a récupérer lorque ceci sont récupérés par ordre de pertinence
@@ -134,15 +137,20 @@ public class messageDaoImpl implements messageDao{
             fermeturesSilencieuses( resultSet, preparedStatement, connexion );
         }
         return mes;
+    }
 
-
+    /**
+     * @return
+     * @throws DAOException
+     */
+    @Override
+    public ArrayList<message> trouverMessageFlagModération() throws DAOException {
+        return null;
     }
 
     private static message map(ResultSet resultSet) throws SQLException{
         message mes = new message();
-        categorie cat = new categorie();
-        cat.setNom(resultSet.getString("Categories"));
-        mes.setCategories(cat);
+        mes.setCategories(resultSet.getString("Categories"));
         mes.setDestinataires(resultSet.getString("Destinataires"));
         mes.setDisagree(resultSet.getInt("disagree"));
         mes.setAgree(resultSet.getInt("Agree"));

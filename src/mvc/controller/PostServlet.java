@@ -31,7 +31,7 @@ public class PostServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         md.ajouter(messageCreator(session,request));
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(VUE);
+        getServletContext().getRequestDispatcher(VUE).forward(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,9 +40,7 @@ public class PostServlet extends HttpServlet {
 
     private static message messageCreator(HttpSession session, HttpServletRequest request){
         message mes = new message();
-        categorie cat = new categorie();
-        cat.setNom(request.getParameter("categorie"));
-        mes.setCategories(cat);
+        mes.setCategories(request.getParameter("categorie"));
         mes.setDisagree(0);
         mes.setAgree(0);
         mes.setFlagModeration(true);

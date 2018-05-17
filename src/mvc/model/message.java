@@ -11,7 +11,7 @@ public class message implements Serializable{
 
     /*---------------------------------- Attributs ----------------------------------*/
 
-    private categorie categorie =  new categorie();
+    private String categorie =  "";
     private String text = "";
     private int idMessage = 0;
     private int idUser = 0;
@@ -136,11 +136,11 @@ public class message implements Serializable{
         this.date = date;
     }
 
-    public categorie getCategories() {
+    public String getCategories() {
         return categorie;
     }
 
-    public void setCategories(categorie categories) {
+    public void setCategories(String categories) {
         this.categorie = categories;
     }
 }
