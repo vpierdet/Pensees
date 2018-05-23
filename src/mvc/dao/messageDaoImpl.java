@@ -87,6 +87,7 @@ public class messageDaoImpl implements messageDao {
                 else if (i > fin) break;
                 else {
                     listeMessages.add(map(resultSet));
+                    i++;
                 }
             }
         } catch (SQLException e) {
@@ -117,6 +118,7 @@ public class messageDaoImpl implements messageDao {
                 else if (i > fin) break;
                 else {
                     listeMessages.add(map(resultSet));
+                    i++;
                 }
             }
         } catch (SQLException e) {
@@ -148,6 +150,7 @@ public class messageDaoImpl implements messageDao {
                 else if (i > fin) break;
                 else {
                     listeMessages.add(map(resultSet));
+                    i++;
                 }
             }
         } catch (SQLException e) {
@@ -204,6 +207,7 @@ public class messageDaoImpl implements messageDao {
                 else if (i > fin) break;
                 else {
                     listeMessages.add(map(resultSet));
+                    i++;
                 }
             }
         } catch (SQLException e) {

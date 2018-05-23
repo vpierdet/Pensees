@@ -12,7 +12,7 @@
     <title>testConnection</title>
 </head>
 <body>
-<form action="/checklog" method="POST">
+<form action="/essai" method="GET">
     username: <input type="text" name="username" /><br>
     password: <input type="text" name="password" /><br>
     <br><input type="submit" />
