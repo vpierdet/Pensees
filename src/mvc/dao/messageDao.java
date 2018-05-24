@@ -28,14 +28,6 @@ public interface messageDao {
     void modifier(message mes)throws DAOException;
 
     /**
-     *
-     * @return
-     * @throws DAOException
-     */
-   ArrayList<message> trouverMessageFlagModération()throws DAOException;
-
-
-    /**
      * permet de choisir la tranche de messages a récupérer lorque ceci sont récupérés par ordre de pertinence
      * @param debut debut de la tranche de messages
      * @param fin fin de la tranche de message

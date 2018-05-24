@@ -11,7 +11,6 @@ public class message implements Serializable{
 
     /*---------------------------------- Attributs ----------------------------------*/
 
-    private String categorie =  "";
     private String text = "";
     private int idMessage = 0;
     private int idUser = 0;
@@ -20,7 +19,7 @@ public class message implements Serializable{
     private int disagree = 0;
 
     private Set<user> destinataires = new HashSet<>();
-
+    private Set<categorie> categories = new HashSet<>();
 
     private boolean flagModeration = false;
     private boolean resolu = false;
@@ -103,6 +102,26 @@ public class message implements Serializable{
         this.destinataires = destinataires;
     }
 
+    public Set<categorie> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<categorie> categories) {
+        this.categories = categories;
+    }
+
+    public void setCategories(String s){
+        Set<String> listNom = new HashSet<>();
+        Collections.addAll(listNom, s.split(","));
+        Set<categorie> listcategorie = new HashSet<>();
+        for (String e : listNom){
+            categorie cat = new categorie();
+            cat.setNom(e);
+            listcategorie.add(cat);
+        }
+        this.categories = listcategorie;
+
+    }
 
     public boolean isFlagModeration() {
         return flagModeration;
@@ -136,11 +155,5 @@ public class message implements Serializable{
         this.date = date;
     }
 
-    public String getCategories() {
-        return categorie;
-    }
 
-    public void setCategories(String categories) {
-        this.categorie = categories;
-    }
 }
