@@ -1,7 +1,7 @@
 package mvc.dao;
 
-import com.sun.deploy.util.ArrayUtil;
 import mvc.model.message;
+
 import static mvc.dao.utilitaireDao.*;
 
 import java.sql.Connection;
@@ -10,97 +10,157 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class messageDaoImpl implements messageDao{
+public class messageDaoImpl implements messageDao {
     private DAOFactory daoFactory;
-    private static final String SQL_UPDATE_ADD = "";
+    private static final String SQL_UPDATE_ADD = "INSERT INTO Message(TextMessage, IdUser, FlagModeration, Agree, Disagree, FlagAnswer, Date, Destinataires,Categories) VALUES(?,?,?,?,?,?,NOW(),?,?)";
     private static final String SQL_UPDATE_DELETE = "";
     private static final String SQL_UPDATE_MODIFY = "";
-    private static final String SQL_SELECT_PERTINENCE = "";
-    private static final String SQL_SELECT_DATE = "";
-    private static final String SQL_SELECT_AUTHOR = "";
+    private static final String SQL_SELECT_PERTINENCE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date FROM Message ORDER BY Agree DESC";
+    private static final String SQL_SELECT_DATE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date FROM Message ORDER BY Date DESC";;
+    private static final String SQL_SELECT_AUTHOR = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date FROM Message WHERE IdUser = ?;";;
     private static final String SQL_SELECT_IDMES = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date FROM Message WHERE IdUser = ?;";
+    private static final String SQL_SELECT_MODER = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date FROM Message WHERE FlagModeration = 1;";;
+
+    messageDaoImpl(DAOFactory daoFactory) {
+        this.daoFactory = daoFactory;
+    }
 
 
-
-    messageDaoImpl (DAOFactory daoFactory){this.daoFactory = daoFactory;}
-    /**
-     * permet d'ajouter un message a la base de données
-     *
-     * @param mes le message a jouter à la base de données
-     * @throws DAOException
-     */
     @Override
     public void ajouter(message mes) throws DAOException {
-
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee(connexion, SQL_UPDATE_ADD, true, mes.getText(), mes.getIdUser(), mes.isFlagModeration(), mes.getAgree(), mes.getDisagree(), mes.isResolu(), 2, mes.getCategories());
+            int i = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+        }
     }
 
-    /**
-     * permet de supprimer un message de la base de données
-     *
-     * @param mes le message à supprimer
-     * @throws DAOException
-     */
+
     @Override
-    public void supprimer(message mes) throws DAOException {
-
+    public void supprimer(int id) throws DAOException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee(connexion, SQL_UPDATE_DELETE, true, id);
+            int i = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+        }
     }
 
-    /**
-     * permet de modifier un message stocké sur la base de données
-     *
-     * @param mes le message à modifier
-     * @throws DAOException
-     */
+
     @Override
     public void modifier(message mes) throws DAOException {
 
     }
 
-    /**
-     * permet de choisir la tranche de messages a récupérer lorque ceci sont récupérés par ordre de pertinence
-     *
-     * @param debut debut de la tranche de messages
-     * @param fin   fin de la tranche de message
-     * @return ArrayList<message> la liste de messages selectionnés
-     * @throws DAOException
-     */
+
     @Override
     public ArrayList<message> trouverMessagesPertinence(int debut, int fin) throws DAOException {
-        return null;
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        message mes = null;
+        ArrayList<message> listeMessages = new ArrayList<>();
+        int i = 0;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_PERTINENCE, false);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            while (resultSet.next()) {
+                if (i < debut) i++;
+                else if (i > fin) break;
+                else {
+                    listeMessages.add(map(resultSet));
+                    i++;
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+        }
+        return listeMessages;
     }
 
-    /**
-     * permet de choisir la tranche de messages a récupérer lorque ceci sont récupérés par date de publication
-     *
-     * @param debut debut de la tranche de messages
-     * @param fin   fin de la tranche de message
-     * @return ArrayList<message> la liste de messages selectionnés
-     * @throws DAOException
-     */
+
     @Override
     public ArrayList<message> trouverMessagesDate(int debut, int fin) throws DAOException {
-        return null;
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        message mes = null;
+        ArrayList<message> listeMessages = new ArrayList<>();
+        int i = 0;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_DATE, false);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            while (resultSet.next()) {
+                if (i < debut) i++;
+                else if (i > fin) break;
+                else {
+                    listeMessages.add(map(resultSet));
+                    i++;
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+        }
+        return listeMessages;
+
     }
 
-    /**
-     * permet de récupérer les messages publiés par un utilisateur en fonction de son id
-     *
-     * @param idUser id de l'utilisateur
-     * @return ArrayList<message> la liste des messages publiés par cet utilisateur
-     * @throws DAOException
-     */
+
     @Override
-    public ArrayList<message> trouverMessagesAuteur(int idUser) throws DAOException {
-        return null;
+    public ArrayList<message> trouverMessagesAuteur(int idUser, int debut, int fin) throws DAOException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        message mes = null;
+        ArrayList<message> listeMessages = new ArrayList<>();
+        int i = 0;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_AUTHOR, false, idUser);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            while (resultSet.next()) {
+                if (i < debut) i++;
+                else if (i > fin) break;
+                else {
+                    listeMessages.add(map(resultSet));
+                    i++;
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+        }
+        return listeMessages;
     }
 
-    /**
-     * per
-     *
-     * @param idMessage
-     * @return
-     * @throws DAOException
-     */
     @Override
     public message trouverMessage(int idMessage) throws DAOException {
         Connection connexion = null;
@@ -110,23 +170,55 @@ public class messageDaoImpl implements messageDao{
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = daoFactory.getConnection();
-            preparedStatement = initialisationRequetePreparee( connexion, SQL_SELECT_IDMES, false, idMessage );
+            preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_IDMES, false, idMessage);
             resultSet = preparedStatement.executeQuery();
             /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
-            if ( resultSet.next() ) {
-                mes = map( resultSet );
+            if (resultSet.next()) {
+                mes = map(resultSet);
             }
-        } catch ( SQLException e ) {
-            throw new DAOException( e );
+        } catch (SQLException e) {
+            throw new DAOException(e);
         } finally {
-            fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+            fermeturesSilencieuses(resultSet, preparedStatement, connexion);
         }
         return mes;
-
-
     }
 
-    private static message map(ResultSet resultSet) throws SQLException{
+    /**
+     * @return
+     * @throws DAOException
+     */
+    @Override
+    public ArrayList<message> trouverMessageFlagModération(int debut, int fin) throws DAOException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        message mes = null;
+        ArrayList<message> listeMessages = new ArrayList<>();
+        int i = 0;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_MODER, false);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            while (resultSet.next()) {
+                if (i < debut) i++;
+                else if (i > fin) break;
+                else {
+                    listeMessages.add(map(resultSet));
+                    i++;
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+        }
+        return listeMessages;
+    }
+
+    private static message map(ResultSet resultSet) throws SQLException {
         message mes = new message();
         mes.setCategories(resultSet.getString("Categories"));
         mes.setDestinataires(resultSet.getString("Destinataires"));
@@ -140,10 +232,8 @@ public class messageDaoImpl implements messageDao{
         mes.setFlagNotif(resultSet.getBoolean("FlagNotif"));
         mes.setText(resultSet.getString("TextMessage"));
         mes.setTimestamp(resultSet.getTimestamp("Date"));
-        return  mes;
+        return mes;
     }
-
-
 
 
 }

@@ -15,10 +15,10 @@ public interface messageDao {
 
     /**
      * permet de supprimer un message de la base de données
-     * @param mes le message à supprimer
+     * @param   id du message à supprimer
      * @throws DAOException
      */
-    void supprimer(message mes)throws DAOException;
+    void supprimer(int id)throws DAOException;
 
     /**
      * permet de modifier un message stocké sur la base de données
@@ -26,6 +26,14 @@ public interface messageDao {
      * @throws DAOException
      */
     void modifier(message mes)throws DAOException;
+
+    /**
+     *
+     * @return
+     * @throws DAOException
+     */
+   ArrayList<message> trouverMessageFlagModération(int debut , int fin)throws DAOException;
+
 
     /**
      * permet de choisir la tranche de messages a récupérer lorque ceci sont récupérés par ordre de pertinence
@@ -51,7 +59,7 @@ public interface messageDao {
      * @return ArrayList<message> la liste des messages publiés par cet utilisateur
      * @throws DAOException
      */
-    ArrayList<message> trouverMessagesAuteur(int idUser)throws DAOException;
+    ArrayList<message> trouverMessagesAuteur(int idUser, int debut, int fin)throws DAOException;
 
     /**
      * per
