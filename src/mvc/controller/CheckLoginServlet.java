@@ -37,6 +37,7 @@ public class CheckLoginServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             out.print(userFound.getUsername() +"     "+ userFound.getMail());
         }
+        getServletContext().getRequestDispatcher("/essai").forward(request,response);
 
     }
 
