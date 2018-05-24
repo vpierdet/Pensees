@@ -108,8 +108,7 @@ ul li a:hover {
 
 form {
     font-size: small;
-    margin-left: 5%;
-    margin-right: 5%;
+    padding-bottom: 5%;
 }
 
 input{
@@ -127,15 +126,18 @@ input{
 
 .boutonPublier{
     float : right;
+    margin-right: 2%;
 }
 
 textarea {
     font-family: Comfortaa;
+    margin-top: -2%;
+    margin-left: 5%;
     border:none;
     resize:none;
-    width: 100%;
+    width: 90%;
     height: 150px;
-    padding: 12px 20px;
+    padding: 10px 20px;
     box-sizing: border-box;
     border-radius: 4px;
     background-color: #f8f8f8;
@@ -145,6 +147,9 @@ select {
     border:none;
 }
 
+#partiebleue {
+    margin-left: 5px;
+}
 
 #idee {
     margin-top: -2%;

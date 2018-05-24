@@ -21,15 +21,16 @@
 <body>
 <br>
 <div class="contour_bleu">
+    <form action="/checklog" id="idee" method="POST">
     <div class="contour_jaune">
     <h1 id="etiquette">Publier un message</h1>
-    <form action="/checklog" id="idee" method="POST">
+
         <textarea id="msg" name="user_message">Ecrivez votre message ici...</textarea>
         <br><br>
-    </form>
+
     </div>
     <br>
-    <form action="/checklog" method="POST">
+        <div id="partiebleue">
     Entrez une catégorie* :
     <select size="1" name="username">
         <option>Enseignement
@@ -41,9 +42,10 @@
     Cochez la case si vous voulez poster le message en format anonyme.
     <br><br>
     <i>* Champs obligatoires</i>
+        </div>
     <input class="boutonPublier" type="submit" value="Publier"/>
-    </form>
     <br>
+    </form>
 </div>
 </body>
 
