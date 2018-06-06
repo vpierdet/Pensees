@@ -99,7 +99,7 @@ ul li a:hover {
 
 }
 
-#etiquette{
+.etiquette{
     margin-top: 3px;
     font-size: medium;
     background: #999999;
@@ -141,10 +141,10 @@ button{
     border-top-right-radius: 5px 5px;
 }
 
-#button_ok{
+.button_ok{
     background: #7aff81;
 }
-#button_pasok{
+.button_pasok{
     background: #ff7c7c;
 }
 
@@ -172,7 +172,7 @@ select {
     margin-top: -2%;
 }
 
-#utilisateur{
+.utilisateur{
     float : right;
     margin-right: 2%;
 }

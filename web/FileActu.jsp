@@ -51,24 +51,20 @@
                 message mes = listeMessage.get(i);
                 String catego = mes.getCategories();
                 out.println(
-                        "<div class=\"type_enseignement\">"
-                                +
-                        "<h1 id=\"etiquette\">" + catego + "</h1>"
-                                +
-                        "</div>"
-                                +
-                        "<div class=\"cadre_message\">"
-                                + mes.getText()+
-                        "<form action=\"deco\" method=\"post\">"
-                                +
-                        "<br>"
-                                +
-                        "<button id=\"button_ok\" type=\"submit\" name=\"ok\">D'accord</button>\n" +
-                        "<button id=\"button_pasok\" type=\"submit\" name=\"pasok\" >Pas d'accord</button>"
-                        +
-                        "<p id=\"utilisateur\">" + "NOM"+"</p>"
-                        +
-                        "</form>"
+                        "<div class=\"type_enseignement\">\n" +
+                                "                <h1 class=\"etiquette\">"+catego+"</h1>\n" +
+                                "            </div>\n" +
+                                "            <div class=\"cadre_message\">\n" +
+                                mes.getText()+
+                                "\n" +
+                                "                <form action=\"deco\" method=\"post\">\n" +
+                                "                    <br>\n" +
+                                "                    <button class=\"button_ok\" type=\"submit\" name=\"ok\">D'accord</button>\n" +
+                                "                    <button class=\"button_pasok\" type=\"submit\" name=\"pasok\" >Pas d'accord</button>\n" +
+                                "                    <p class=\"utilisateur\">"+"NOM"+"</p>\n" +
+                                "                </form>\n" +
+                                "            </div>\n" +
+                                "            <br>"
                 );
             }
 
