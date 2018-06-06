@@ -21,30 +21,30 @@
 <body>
 <br>
 <div class="contour_bleu">
-    <form action="/checklog" id="idee" method="POST">
-    <div class="contour_jaune">
-    <h1 id="etiquette">Publier un message</h1>
+    <form action="/PostServlet" id="idee" method="POST">
+        <div class="contour_jaune">
+            <h1 id="etiquette">Publier un message</h1>
 
-        <textarea id="msg" name="user_message">Ecrivez votre message ici...</textarea>
-        <br><br>
+            <textarea id="msg" name="user_message">Ecrivez votre message ici...</textarea>
+            <br><br>
 
-    </div>
-    <br>
-        <div id="partiebleue">
-    Entrez une catégorie* :
-    <select size="1" name="username">
-        <option>Enseignement
-        <option>Organisation
-        <option>Aménagement et Matériel
-    </select>
-    <br><br>
-    <input type="checkbox" name="anonymat">
-    Cochez la case si vous voulez poster le message en format anonyme.
-    <br><br>
-    <i>* Champs obligatoires</i>
         </div>
-    <input class="boutonPublier" type="submit" value="Publier"/>
-    <br>
+        <br>
+        <div id="partiebleue">
+            Entrez une catégorie* :
+            <select size="1" name="category">
+                <option value = "Enseignement">Enseignement
+                <option value = "Organisation">Organisation
+                <option value = "Aménagement et Matériel">Aménagement et Matériel
+            </select>
+            <br><br>
+            <input type="checkbox" name="anonymat">
+            Cochez la case si vous voulez poster le message en format anonyme.
+            <br><br>
+            <i>* Champs obligatoires</i>
+        </div>
+        <input class="boutonPublier" type="submit" value="Publier"/>
+        <br>
     </form>
 </div>
 </body>

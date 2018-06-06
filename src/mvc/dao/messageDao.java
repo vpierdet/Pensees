@@ -69,4 +69,15 @@ public interface messageDao {
      */
     message trouverMessage(int idMessage)throws DAOException;
 
+
+    /**
+     *
+     * @param idUser
+     * @param debut
+     * @param fin
+     * @return
+     * @throws DAOException
+     */
+    ArrayList<message> trouverMessagesCategorie(String categorie, int debut, int fin)throws DAOException;
+
 }

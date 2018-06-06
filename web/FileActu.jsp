@@ -24,7 +24,7 @@
         <li ><a href="#">Publier</a></li>
         <li><a href="#">Votre Avis</a></li>
         <li><a href="#">Signalement</a></li>
-        <li><a href="#">Déconnexion</a></li>
+        <li><a href="/deco">Déconnexion</a></li>
     </ul>
     <br>
 </div>
@@ -53,19 +53,14 @@
                 "<div class=\"type_enseignement\">\n" +
                          catego +"\n" +
                         "        </div>"+
-                ""+ mes.getText()+"<form action=\"/\" method=\"post\">\n" +
+                ""+ mes.getText()+"<form action=\"/deco\" method=\"post\">\n" +
                 "            <button id=\"button_ok\" type=\"submit\" name=\"ok\">D'accord</button>\n" +
-                "            <button id=\"button_pasok\" type=\"submit\" name=\"pasok\">Pas d'accord</button>\n" +
+                "            <button id=\"button_pasok\" type=\"submit\" name=\"pasok\" >Pas d'accord</button>\n" +
                 "        </form> </div>");
     }
 
 %>
 </div>
-
-
-
-
-
 
 
 

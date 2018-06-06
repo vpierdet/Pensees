@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "MessageServlet", urlPatterns = {"/MessageServlet"})
 public class MessageServlet extends HttpServlet {
@@ -22,19 +23,36 @@ public class MessageServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        message mes = MessageFinder(request);
-        System.out.println(mes.getText());
+        ArrayList<message> listeMessage = null;
+        if (request.getAttribute("tri") != null){
+            listeMessage = md.trouverMessagesPertinence(0,10);
+
+        }
+        else {
+            switch(request.getParameter("tri")){
+                case "date" : listeMessage = md.trouverMessagesDate(0,10);
+                     break;
+
+                     case "pertinence" :
+                     listeMessage = md.trouverMessagesPertinence(0,10);
+                    break;
+
+
+            }
+        }
+
+        request.setAttribute("listeMessage" , listeMessage);
+        getServletContext().getRequestDispatcher("/FileActu.jsp").forward(request,response);
+
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        ArrayList<message> listeMessage = md.trouverMessagesDate(0,5);
+        for (message e : listeMessage) System.out.println(e.getText());
     }
 
 
-    private  message MessageFinder(HttpServletRequest request){
-        int id = Integer.parseInt(request.getParameter("idMes"));
-        return md.trouverMessage(id);
-    }
+
 
 }

@@ -12,6 +12,10 @@ public class message implements Serializable{
     /*---------------------------------- Attributs ----------------------------------*/
 
     private String text = "";
+    private String username = "";
+
+
+
     private int idMessage = 0;
     private int idUser = 0;
     private int idReponse = 0;
@@ -155,5 +159,12 @@ public class message implements Serializable{
         this.date = date;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
 }

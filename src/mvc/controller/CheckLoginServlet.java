@@ -5,9 +5,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Enumeration;
 
 import mvc.dao.userDao;
 import mvc.dao.DAOFactory;
@@ -16,41 +15,47 @@ import mvc.model.user;
 
 @WebServlet(name = "CheckLoginServlet", urlPatterns = {"/checklog"})
 public class CheckLoginServlet extends HttpServlet {
-    public static final String CONF_DAO_FACTORY = "daofactory";
-    public static final String ATT_USER         = "utilisateur";
-    public static final String ATT_FORM         = "form";
-    public static final String VUE              = "/WEB-INF/inscription.jsp";
+    private static final String CONF_DAO_FACTORY = "daofactory";
     private userDao ud;
 
-    public void init() throws ServletException {
+    public void init() {
         /* Récupération d'une instance de notre DAO Utilisateur */
         this.ud = ( (DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getUserDao();
 
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String usernameForm =  request.getParameter("username");
+        String passwordForm =  request.getParameter("password");
         user userFound = FindUser(request);
         if (userFound == null){
             System.out.println("utilisateur non trouvé");
+            getServletContext().getRequestDispatcher("/log").forward(request,response);
         }
         else{
-            PrintWriter out = response.getWriter();
-            out.print(userFound.getUsername() +"     "+ userFound.getMail());
+            if(passwordForm.equals(userFound.getPassword())){
+                HttpSession session = request.getSession();
+                session.setAttribute("username", usernameForm);
+                int idUser = userFound.getIdUser();
+                session.setAttribute("idUser", idUser);
+                getServletContext().getRequestDispatcher("/essai").forward(request,response);
+            }
+            else{
+                System.out.println("mot de passe erroné");
+                getServletContext().getRequestDispatcher("/log").forward(request,response);
+            }
         }
-        System.out.println("trouvé");
-        getServletContext().getRequestDispatcher("/essai").forward(request,response);
+
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 
     }
 
     private user FindUser(HttpServletRequest request) {
-        String usernameForm = (String) request.getParameter("username");
-        String passwordForm = (String) request.getParameter("password");
-        user userFound = ud.trouver(usernameForm);
-        return userFound;
+        String usernameForm = request.getParameter("username");
+        return ud.trouver(usernameForm);
 
     }
 

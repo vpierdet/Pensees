@@ -15,6 +15,7 @@ public class messageDaoImpl implements messageDao {
     private static final String SQL_UPDATE_ADD = "INSERT INTO Message(TextMessage, IdUser, FlagModeration, Agree, Disagree, FlagAnswer, Date, Destinataires,Categories) VALUES(?,?,?,?,?,?,NOW(),?,?)";
     private static final String SQL_UPDATE_DELETE = "";
     private static final String SQL_UPDATE_MODIFY = "";
+    private static final String SQL_SELECT_CATEGORIE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date FROM Message WHERE IdUser = ? ORDER BY Date DESC";;
     private static final String SQL_SELECT_PERTINENCE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date FROM Message ORDER BY Agree DESC";
     private static final String SQL_SELECT_DATE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date FROM Message ORDER BY Date DESC";;
     private static final String SQL_SELECT_AUTHOR = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date FROM Message WHERE IdUser = ?;";;
@@ -184,6 +185,38 @@ public class messageDaoImpl implements messageDao {
         return mes;
     }
 
+
+    @Override
+    public ArrayList<message> trouverMessagesCategorie(String categorie, int debut, int fin) throws DAOException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        message mes = null;
+        ArrayList<message> listeMessages = new ArrayList<>();
+        int i = 0;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_CATEGORIE, false, categorie);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            while (resultSet.next()) {
+                if (i < debut) i++;
+                else if (i > fin) break;
+                else {
+                    listeMessages.add(map(resultSet));
+                    i++;
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+        }
+        return listeMessages;
+
+    }
+
     /**
      * @return
      * @throws DAOException
@@ -232,6 +265,7 @@ public class messageDaoImpl implements messageDao {
         mes.setFlagNotif(resultSet.getBoolean("FlagNotif"));
         mes.setText(resultSet.getString("TextMessage"));
         mes.setTimestamp(resultSet.getTimestamp("Date"));
+        mes.setUsername(resultSet.getString("Username"));
         return mes;
     }
 
