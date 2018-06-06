@@ -21,6 +21,7 @@ public class EssaiServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("coucuo");
         ArrayList<message> listeMessage = md.trouverMessagesPertinence(0,5);
         request.setAttribute("listeMessage" , listeMessage);
         getServletContext().getRequestDispatcher("/FileActu.jsp").forward(request,response);

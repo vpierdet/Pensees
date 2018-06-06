@@ -19,7 +19,7 @@ public class message implements Serializable{
     private int disagree = 0;
 
     private Set<user> destinataires = new HashSet<>();
-    private Set<categorie> categories = new HashSet<>();
+    private String categories ="";
 
     private boolean flagModeration = false;
     private boolean resolu = false;
@@ -102,15 +102,15 @@ public class message implements Serializable{
         this.destinataires = destinataires;
     }
 
-    public Set<categorie> getCategories() {
+    public String getCategories() {
         return categories;
     }
 
-    public void setCategories(Set<categorie> categories) {
+    public void setCategories(String categories) {
         this.categories = categories;
     }
 
-    public void setCategories(String s){
+    /*public void setCategories(String s){
         Set<String> listNom = new HashSet<>();
         Collections.addAll(listNom, s.split(","));
         Set<categorie> listcategorie = new HashSet<>();
@@ -121,7 +121,7 @@ public class message implements Serializable{
         }
         this.categories = listcategorie;
 
-    }
+    }*/
 
     public boolean isFlagModeration() {
         return flagModeration;
