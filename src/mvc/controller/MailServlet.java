@@ -1,5 +1,7 @@
 package mvc.controller;
 
+import mvc.mail.Mailer;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,47 +12,44 @@ import javax.mail.internet.*;
 import javax.mail.*;
 import java.util.*;
 
-@WebServlet(name = "MailServlet")
+@WebServlet(name = "MailServlet", urlPatterns = {"/MailServlet"})
 public class MailServlet extends HttpServlet {
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        private final static String MAILER_VERSION = "Java";
-        public static boolean envoyerMailSMTP(String serveur, boolean debug) {
-            boolean result = false;
-            try {
-                Properties prop = System.getProperties();
-                prop.put("mail.smtp.host", serveur);
-                Session session = Session.getDefaultInstance(prop,null);
-                Message message = new MimeMessage(session);
-                message.setFrom(new InternetAddress("moi@chez-moi.fr"));
-                InternetAddress[] internetAddresses = new InternetAddress[1];
-                internetAddresses[0] = new InternetAddress("moi@chez-moifr");
-                message.setRecipients(Message.RecipientType.TO,internetAddresses);
-                message.setSubject("Test");
-                message.setText("test mail");
-                message.setHeader("X-Mailer", MAILER_VERSION);
-                message.setSentDate(new Date());
-                session.setDebug(debug);
-                Transport.send(message);
-                result = true;
-            } catch (AddressException e) {
-                e.printStackTrace();
-            } catch (MessagingException e) {
+        String pageName = request.getParameter("pageName");
+
+        if(pageName.equals("signal")){
+            String reason = request.getParameter("reason");
+            String nameBan = request.getParameter("usernameBan");
+            String text = request.getParameter("user_message");
+            String finalMessage = writeMessage(reason, nameBan, text);
+            try{
+            Mailer.send("matthiasdeconninck@hotmail.fr", "Signalement", finalMessage);}
+            catch(java.lang.NoClassDefFoundError  e){
+                System.out.println(e);
                 e.printStackTrace();
             }
-            return result;
+
+        }
+        else if(pageName.equals("post")){
+
+        }
+        else{
+
         }
 
-        public static void main(String[] args) {
-          //  TestMail.envoyerMailSMTP("10.10.50.8",true);
-        }
-
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String emetteur = "valentin";
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
+
+    protected String writeMessage(String reason, String user, String message){
+
+        String finalMessage = " The User " + user + " has been reported for " + reason + ". The informations given are : " + message + "";
+        return finalMessage;
+    }
+
+
 }

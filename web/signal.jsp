@@ -11,7 +11,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="Signal.css" />
+    <link rel="stylesheet" href="signal.css" />
     <title>Signaler</title>
 </head>
 <img class="bandeau" src="pictures/header_menu.svg"/>
@@ -27,7 +27,8 @@
 
 <body>
 
-<form action="/signal" method="POST">
+<form action="/MailServlet" method="POST">
+    <input type="hidden" name="pageName" value = "signal"/>
     <div class="contour_bleu">
         <h3>    Signaler un utilisateur :       <input type="text" name="usernameBan"/></h3>
 
