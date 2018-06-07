@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Comfortaa" />
+<script type="text/javascript" src="/JS/Jpublier.js"></script>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,7 +22,7 @@
 <body>
 <br>
 <div class="contour_bleu">
-    <form action="/PostServlet" id="idee" method="POST">
+    <form action="/post" id="idee" method="POST" onsubmit="checkEmpty()">
         <div class="contour_jaune">
             <h1 id="etiquette">Publier un message</h1>
 
