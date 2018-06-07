@@ -85,6 +85,7 @@ public class DAOFactory {
     public messageDao getMessageDao() {
         return new messageDaoImpl( this );
     }
+    public etatMessageDAO getEtatMessageDAO(){return new etatMessageDaoImpl(this);}
 
 
 }
