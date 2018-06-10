@@ -17,6 +17,8 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="file_message.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Fil Actualite</title>
 </head>
 <img class="bandeau" src="pictures/header_menu.svg"/>
@@ -24,6 +26,7 @@
 
 <ul id="menu_user">
     <li id="activ_window"><a href="#">Fil Message</a></li>
+    <li><a href="#">Messages me concernant</a></li>
     <li><a href="#">Publier</a></li>
     <li><a href="#">Votre Avis</a></li>
     <li><a href="#">Signalement</a></li>
@@ -56,23 +59,19 @@
                                 "            </div>\n" +
                                 "            <div class=\"cadre_message\">\n" +
                                 mes.getText()+
-                                "\n" +
-                                "<form  method=\"post\"> \n" +
+                                "\n <br>" +
+                                "<button class=\"button_ok\" name=\"ok\">D'accord (30)</button>\n" +
+                                "                <button class=\"button_pasok\" name=\"pasok\" >Pas d'accord (12)</button><br><br>\n" +
+                                "                <button onclick=\"hidendisplay(1)\" id=\"answer1\" class=\"button_repondre\" >Répondre</button>\n" +
+                                "                <p class=\"utilisateur\">"+"NOM"+"DATE"+"</p>\n" + //ICI INPUT NOM/DATE USER
                                 "                <br>\n" +
-                                // if deja vote : enlever type:"submit" sur les 2 boutons ok/pas ok
-                                "                <button class=\"button_ok\" type=\"submit\" name=\"ok\">D'accord (30)</button>\n" +
-                                "                <button class=\"button_pasok\" type=\"submit\" name=\"pasok\" >Pas d'accord (12)</button>\n" +
-                               //fin du if
-
-                                "                <p class=\"utilisateur\">" + "NOM" + "DATE" +"</p>\n" + //ICI INPUT NOM + DATE UTILISATEUR
-                                "            </form>\n" +
-                                // if reponse existe :
-                                "            <div class=\"cadre_reponse_util\">\n" +
-                                "                <p>"+ "MESSAGE REPONSE" + "</p>\n" + //ICI INPUT REPONSE
-                                "                <p class=\"reponse_admin\">" + "NOM" + "DATE" +"</p>\n" + //ICI INPUT NOM + DATE ADMIN
-                                "            </div>\n" +
-                                //fin du if
+                                "            <form  method=\"post\"> \n" +
+                                "                <textarea hidden id=\"reponse1\"  class=\"cadre_reponse\">Entrez votre réponse ici.\n" + //ENTREE FORM TEXTE
+                                "                </textarea>\n" +
+                                "                <br>\n" +
+                                "                <button hidden id=\"publish1\" class=\"button_repondre\" type=\"submit\" >Publier</button>\n" +
                                 "\n" +
+                                "            </form>" +
                                 "        </div>\n" +
                                 "\n" +
                                 "\n" +
@@ -82,8 +81,8 @@
 
         %>
 
-        </div>
     </div>
+</div>
 
 
 </div>
@@ -91,4 +90,16 @@
 </body>
 
 <img class="logo" src="pictures/logo_sans_nom.svg"/>
+<script>
+    function hidendisplay(x) {
+        var answer = document.getElementById('answer'+x.toString());
+        var textarea = document.getElementById('reponse'+x.toString());
+        var publish = document.getElementById('publish'+x.toString());
+        answer.style.display = "none";
+        textarea.style.display = "block";
+        publish.style.display = "block";
+
+
+    }
+</script>
 </html>

@@ -102,7 +102,7 @@ ul li a:hover {
 .etiquette{
     margin-top: 3px;
     font-size: medium;
-    background: #999999;
+    background: #ff49ec;
     margin-left: 5%;
     margin-right: 5%;
 }
@@ -144,10 +144,21 @@ button{
 .button_ok{
     background: #7aff81;
 }
+.button_ok:hover{
+    background: #d0ffd1;
+}
+
 .button_pasok{
     background: #ff7c7c;
 }
+.button_pasok:hover{
+    background: #ffc1c1;
+}
 
+.button_repondre{
+    background: #0061a1;
+    color: white;
+}
 
 .cadre_message{
     margin-top: -2%;
@@ -156,7 +167,6 @@ button{
     background: #ffffff;
     margin-right: 5%;
 
-    padding-bottom: 1%;
 }
 
 
@@ -175,4 +185,30 @@ select {
 .utilisateur{
     float : right;
     margin-right: 2%;
+    font-size: smaller;
+}
+
+.cadre_reponse {
+    background-color: #cccccc;
+    font-size: small;
+    padding: 1% 1% 1% 1%;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+
+.cadre_reponse_util{
+    background-color: #cccccc;
+    font-size: small;
+    margin-top: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    box-sizing: border-box;
+    border-radius: 4px;
+
+}
+
+.reponse_admin{
+
 }
