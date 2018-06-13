@@ -11,10 +11,11 @@ import java.sql.SQLException;
 
 import static mvc.dao.utilitaireDao.initialisationRequetePreparee;
 
-public class etatMessageDaoImpl implements etatMessageDAO {
+public class etatMessageDaoImpl implements etatMessageDao {
     private DAOFactory daoFactory;
-    private static final String SQL_UPDATE_ADD = "INSERT INTO etatMessage(idMessage, idUser, value) VALUES(?,?,?)";
-    private static final String SQL_SELECT_BASE = "SELECT idMessage, idUser, value FROM etatMessage WHERE idMessage = ? AND idUser = ? ";
+    private static final String SQL_UPDATE_DEL = "DELETE FROM etatMessage WHERE IdMessage = ? AND IdUser = ?";
+    private static final String SQL_UPDATE_ADD = "INSERT INTO etatMessage(IdMessage, IdUser, value) VALUES(?,?,?)";
+    private static final String SQL_SELECT_BASE = "SELECT IdMessage, idUser, value FROM etatMessage WHERE IdMessage = ? AND IdUser = ? ";
 
     public etatMessageDaoImpl(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;
@@ -45,7 +46,7 @@ public class etatMessageDaoImpl implements etatMessageDAO {
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = daoFactory.getConnection();
-            preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_BASE, false);
+            preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_BASE, false, idMessage,idUser);
             resultSet = preparedStatement.executeQuery();
             /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
             em = map(resultSet);
@@ -59,12 +60,32 @@ public class etatMessageDaoImpl implements etatMessageDAO {
     }
 
 
+    @Override
+    public void supprimer(int idUser, int idMessage) {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee(connexion, SQL_UPDATE_DEL, true, idMessage,idUser);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            utilitaireDao.fermeturesSilencieuses( preparedStatement, connexion);
+        }
+    }
+
     private static etatMessage map(ResultSet resultSet) throws SQLException {
-        if (resultSet==null)return null;
-        etatMessage em = new etatMessage();
-        em.setEtat(resultSet.getInt("value"));
-        em.setIdMessage(resultSet.getInt("idMessage"));
-        em.setIdUser(resultSet.getInt("idUser"));
-        return em;
+        if (resultSet.next()){
+            etatMessage em = new etatMessage();
+            em.setEtat(resultSet.getInt("value"));
+            em.setIdMessage(resultSet.getInt("idMessage"));
+            em.setIdUser(resultSet.getInt("idUser"));
+            return em;
+        }
+        else{
+           return null;
+        }
     }
 }

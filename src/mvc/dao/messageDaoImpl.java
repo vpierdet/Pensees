@@ -13,14 +13,19 @@ import java.util.ArrayList;
 public class messageDaoImpl implements messageDao {
     private DAOFactory daoFactory;
     private static final String SQL_UPDATE_ADD = "INSERT INTO Message(TextMessage, IdUser, FlagModeration, Agree, Disagree, FlagAnswer, Date, Destinataires,Categories) VALUES(?,?,?,?,?,?,NOW(),?,?)";
-    private static final String SQL_UPDATE_DELETE = "";
-    private static final String SQL_UPDATE_MODIFY = "";
+    private static final String SQL_UPDATE_DELETE = "DELETE FROM Message WHERE condition";
+    private static final String SQL_UPDATE_AG_PLUS ="UPDATE Message SET Agree = Agree + 1 WHERE IdMessage = ?";
+    private static final String SQL_UPDATE_AG_MOIN ="UPDATE Message SET Agree = Agree - 1 WHERE IdMessage = ?";
+    private static final String SQL_UPDATE_DAG_PLUS ="UPDATE Message SET Disagree = Disagree + 1 WHERE IdMessage = ?";
+    private static final String SQL_UPDATE_DAG_MOIN ="UPDATE Message SET Disagree = Disagree - 1 WHERE IdMessage = ?";
+
+
     private static final String SQL_SELECT_CATEGORIE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Username Date FROM Message WHERE IdUser = ? ORDER BY Date DESC";
     private static final String SQL_SELECT_PERTINENCE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date, Username  FROM Message ORDER BY Agree DESC";
-    private static final String SQL_SELECT_DATE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date, Username  FROM Message ORDER BY Date DESC";;
-    private static final String SQL_SELECT_AUTHOR = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date, Username  FROM Message WHERE IdUser = ?;";;
+    private static final String SQL_SELECT_DATE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date, Username  FROM Message ORDER BY Date DESC";
+    private static final String SQL_SELECT_AUTHOR = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date, Username  FROM Message WHERE IdUser = ?;";
     private static final String SQL_SELECT_IDMES = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date, Username  FROM Message WHERE IdUser = ?;";
-    private static final String SQL_SELECT_MODER = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date, Username  FROM Message WHERE FlagModeration = 1;";;
+    private static final String SQL_SELECT_MODER = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date, Username  FROM Message WHERE FlagModeration = 1;";
 
     messageDaoImpl(DAOFactory daoFactory) {
         this.daoFactory = daoFactory;
@@ -160,6 +165,44 @@ public class messageDaoImpl implements messageDao {
             fermeturesSilencieuses(resultSet, preparedStatement, connexion);
         }
         return listeMessages;
+    }
+
+    @Override
+    public void modifierAGDAG(int idMessage, boolean agree, boolean plus) throws DAOException {
+        String SQL_ADAG;
+        if (agree){
+            if (plus){
+                SQL_ADAG = SQL_UPDATE_AG_PLUS;
+            }
+            else{
+                SQL_ADAG = SQL_UPDATE_AG_MOIN;
+            }
+        }
+        else{
+            if (plus){
+                SQL_ADAG = SQL_UPDATE_DAG_PLUS;
+            }
+            else{
+                SQL_ADAG = SQL_UPDATE_DAG_MOIN;
+            }
+        }
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee( connexion, SQL_ADAG, true ,  idMessage);
+            preparedStatement.executeUpdate();
+            /* Récupération de l'id auto-généré par la requête d'insertion */
+            valeursAutoGenerees = preparedStatement.getGeneratedKeys();
+        } catch ( SQLException e ) {
+            throw new DAOException( e );
+        } finally {
+            fermeturesSilencieuses( valeursAutoGenerees, preparedStatement, connexion );
+        }
+
     }
 
     @Override

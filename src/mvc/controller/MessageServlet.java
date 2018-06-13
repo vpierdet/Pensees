@@ -3,6 +3,10 @@ package mvc.controller;
 import mvc.dao.DAOFactory;
 import mvc.dao.messageDao;
 import mvc.model.message;
+import mvc.dao.etatMessageDao;
+import mvc.model.etatMessage;
+import mvc.dao.answerDao;
+import mvc.model.answer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,16 +18,20 @@ import java.util.ArrayList;
 
 @WebServlet(name = "MessageServlet", urlPatterns = {"/MessageServlet"})
 public class MessageServlet extends HttpServlet {
-    public static final String CONF_DAO_FACTORY = "daofactory";
+    private static final String CONF_DAO_FACTORY = "daofactory";
     private messageDao md;
+    private etatMessageDao emd;
+    private answerDao ad;
 
-    public void init() throws ServletException {
-        /* Récupération d'une instance de notre DAO Utilisateur */
-        this.md = ( (DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getMessageDao();
+    public void init() {
+        this.md = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getMessageDao();
+        this.emd = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY )).getEtatMessageDAO();
+        this.ad = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY )).getAnswerDao();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<message> listeMessage = null;
+        System.out.println("coolitude");
+        ArrayList<message> listeMessage ;
         if (request.getAttribute("tri") != null){
             listeMessage = md.trouverMessagesPertinence(0,10);
 
@@ -37,9 +45,16 @@ public class MessageServlet extends HttpServlet {
                      listeMessage = md.trouverMessagesPertinence(0,10);
                     break;
 
+                default : listeMessage = md.trouverMessagesPertinence(0,10);
+                    break;
+
 
             }
         }
+
+        listeMessage = getEtat(listeMessage,request);
+        listeMessage = getResponse(listeMessage);
+
 
         request.setAttribute("listeMessage" , listeMessage);
         getServletContext().getRequestDispatcher("/FileActu.jsp").forward(request,response);
@@ -47,9 +62,29 @@ public class MessageServlet extends HttpServlet {
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<message> listeMessage = md.trouverMessagesDate(0,5);
-        for (message e : listeMessage) System.out.println(e.getText());
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    }
+
+    private ArrayList<message> getEtat(ArrayList<message> list,HttpServletRequest request){
+        int idUser = (int) request.getSession().getAttribute("idUser");
+        for (message mes : list){
+            etatMessage e = emd.trouver(idUser , mes.getIdMessage());
+            if(e!= null)
+            mes.setEtat(e.getEtat());
+            System.out.println(mes.getIdMessage() +"   " + e);
+        }
+        return list;
+    }
+
+    private ArrayList<message> getResponse(ArrayList<message> list){
+        for (message mes : list){
+            if (mes.isResolu()) {
+                answer ans = ad.trouverReponseIdMessage(mes.getIdMessage());
+                mes.setUsernameAnswer(ans.getUsername());
+                mes.setReponse(ans.getTxt());
+            }
+        }
+        return list;
     }
 
 

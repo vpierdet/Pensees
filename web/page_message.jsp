@@ -12,11 +12,11 @@
 
 
 <ul id="menu_user">
-    <li id ="activ_window"><a href="#">Fil Message</a></li>
-    <li ><a href="#">Publier</a></li>
+    <li id ="activ_window"><a href="/MessageServlet">Fil Message</a></li>
+    <li ><a href="/page_message.jsp">Publier</a></li>
     <li><a href="#">Votre Avis</a></li>
-    <li><a href="#">Signalement</a></li>
-    <li><a href="#">Déconnexion</a></li>
+    <li><a href="/signal.jsp">Signalement</a></li>
+    <li><a href="/deco">Déconnexion</a></li>
 </ul>
 <br>
 

@@ -18,7 +18,7 @@
 
 <ul id="menu_user">
     <li><a href="#">Fil Message</a></li>
-    <li><a href="#">Publier</a></li>
+    <li><a href="/FileActu.jsp">Publier</a></li>
     <li><a href="#">Votre Avis</a></li>
     <li id="activ_window"><a href="#">Signalement</a></li>
     <li><a href="#">Déconnexion</a></li>

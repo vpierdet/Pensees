@@ -38,7 +38,8 @@ public class CheckLoginServlet extends HttpServlet {
                 session.setAttribute("username", usernameForm);
                 int idUser = userFound.getIdUser();
                 session.setAttribute("idUser", idUser);
-                getServletContext().getRequestDispatcher("/essai").forward(request,response);
+                request.setAttribute("tri", "default");
+                getServletContext().getRequestDispatcher("/MessageServlet").forward(request,response);
             }
             else{
                 System.out.println("mot de passe erroné");
