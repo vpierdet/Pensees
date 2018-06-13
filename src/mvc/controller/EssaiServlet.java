@@ -22,7 +22,7 @@ public class EssaiServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        ArrayList<message> listeMessage = md.trouverMessagesPertinence(0,5);
+        ArrayList<message> listeMessage = md.trouverMessagesDate(0,5);
         request.setAttribute("listeMessage" , listeMessage);
         getServletContext().getRequestDispatcher("/FileActu.jsp").forward(request,response);
 
@@ -30,7 +30,8 @@ public class EssaiServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<message> listeMessage = md.trouverMessagesDate(0,5);
-        for (message e : listeMessage) System.out.println(e.getText());
+        ArrayList<message> listeMessage = md.trouverMessagesPertinence(0,5);
+        request.setAttribute("listeMessage" , listeMessage);
+        getServletContext().getRequestDispatcher("/FileActu.jsp").forward(request,response);
     }
 }
