@@ -59,10 +59,14 @@
                                 "\n" +
                                 "<form  method=\"post\"> \n" +
                                 "                <br>\n" +
-                                // if deja vote : enlever type:"submit" sur les 2 boutons ok/pas ok
+                                // if deja vote :
+                                //"                <button class=\"button_ok\" name=\"ok\" style="background: #d0ffd1">D'accord (30)</button>\n" +
+                                //"                <button class=\"button_pasok\" name=\"pasok\" style="background: #ffc1c1" >Pas d'accord (12)</button>\n" +
+                               //sinon :
                                 "                <button class=\"button_ok\" type=\"submit\" name=\"ok\">D'accord (30)</button>\n" +
                                 "                <button class=\"button_pasok\" type=\"submit\" name=\"pasok\" >Pas d'accord (12)</button>\n" +
-                               //fin du if
+                                //fin du if
+
 
                                 "                <p class=\"utilisateur\">" + "NOM" + "DATE" +"</p>\n" + //ICI INPUT NOM + DATE UTILISATEUR
                                 "            </form>\n" +
