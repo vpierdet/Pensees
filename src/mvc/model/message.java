@@ -13,8 +13,9 @@ public class message implements Serializable{
 
     private String text = "";
     private String username = "";
-
-
+    private int etat = 0;
+    private String reponse;
+    private String usernameAnswer = "";
 
     private int idMessage = 0;
     private int idUser = 0;
@@ -37,6 +38,30 @@ public class message implements Serializable{
     }
 
     /*-------------------------- Getters and Setters  -------------------------------*/
+
+    public String getUsernameAnswer() {
+        return usernameAnswer;
+    }
+
+    public void setUsernameAnswer(String usernameAnswer) {
+        this.usernameAnswer = usernameAnswer;
+    }
+
+    public String getReponse() {
+        return reponse;
+    }
+
+    public void setReponse(String reponse) {
+        this.reponse = reponse;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
+    }
 
     public String getText() {
         return text;

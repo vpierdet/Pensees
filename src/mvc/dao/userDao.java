@@ -6,6 +6,7 @@ public interface  userDao {
 
     user trouver(String username) throws DAOException;
 
-    void modifier(user user1) throws DAOException;
+    void bannir(String username) throws DAOException;
+
 
 }

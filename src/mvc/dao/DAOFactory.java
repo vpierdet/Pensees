@@ -1,7 +1,6 @@
 package mvc.dao;
 
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -85,7 +84,7 @@ public class DAOFactory {
     public messageDao getMessageDao() {
         return new messageDaoImpl( this );
     }
-    public etatMessageDAO getEtatMessageDAO(){return new etatMessageDaoImpl(this);}
+    public etatMessageDao getEtatMessageDAO(){return new etatMessageDaoImpl(this);}
 
 
 }

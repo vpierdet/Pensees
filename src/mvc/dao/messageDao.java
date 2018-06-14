@@ -27,6 +27,8 @@ public interface messageDao {
      */
     void modifier(message mes)throws DAOException;
 
+    void modifierAGDAG(int idMessage, boolean agree, boolean plus)throws DAOException;
+
     /**
      *
      * @return
@@ -79,5 +81,7 @@ public interface messageDao {
      * @throws DAOException
      */
     ArrayList<message> trouverMessagesCategorie(String categorie, int debut, int fin)throws DAOException;
+
+
 
 }

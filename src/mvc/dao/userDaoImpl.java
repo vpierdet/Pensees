@@ -43,7 +43,7 @@ public class userDaoImpl implements userDao {
     }
 
     @Override
-    public void modifier(user user1) throws DAOException {
+    public void bannir(String username) throws DAOException {
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet valeursAutoGenerees = null;
@@ -51,7 +51,7 @@ public class userDaoImpl implements userDao {
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = daoFactory.getConnection();
-            preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_BANNIR, true, user1.getUsername());
+            preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_BANNIR, true, username);
             int statut = preparedStatement.executeUpdate();
             /* Analyse du statut retourné par la requête d'insertion */
             if ( statut == 0 ) {
@@ -59,17 +59,18 @@ public class userDaoImpl implements userDao {
             }
             /* Récupération de l'id auto-généré par la requête d'insertion */
             valeursAutoGenerees = preparedStatement.getGeneratedKeys();
-            if ( valeursAutoGenerees.next() ) {
+           /* if ( valeursAutoGenerees.next() ) {
 
             } else {
                 throw new DAOException( "Échec de la modification de l'utilisateur, aucun ID auto-généré retourné." );
-            }
+            }*/
         } catch ( SQLException e ) {
             throw new DAOException( e );
         } finally {
             fermeturesSilencieuses( valeursAutoGenerees, preparedStatement, connexion );
         }
     }
+
 
     private static user map(ResultSet resultSet) throws SQLException {
         user user1 = new user();
