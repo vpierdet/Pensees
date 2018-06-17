@@ -55,7 +55,7 @@
                 // UNIQUEMENT MESSAGES AUQUEL IL PEUT REPONDRE
                 out.println(
                         "<div class=\"type_enseignement\">\n" +
-                                "                <h1 class=\"etiquette\">"+catego+"</h1>\n" +
+                                "                <h1 class=\"etiquette"+catego+"\">"+catego+"</h1>\n" +
                                 "            </div>\n" +
                                 "            <div class=\"cadre_message\">\n" +
                                 mes.getText()+

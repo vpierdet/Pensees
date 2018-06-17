@@ -54,7 +54,7 @@
                 String valueDAG = mes.getEtat() == -1 ? "d-1":"d+1";
                 out.println(
                         "<div class=\"type_enseignement\" id=\""+catego +"\">\n" +
-                                "                <h1 class=\"etiquette\">"+catego+"</h1>\n" +
+                                "                <h1 class=\"etiquette "+catego+"\">"+catego+"</h1>\n" +
                                 "            </div>\n" +
                                 "            <div class=\"cadre_message\">\n" +
                                 mes.getText()+

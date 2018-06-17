@@ -102,9 +102,28 @@ ul li a:hover {
 .etiquette{
     margin-top: 3px;
     font-size: medium;
-    background: #ff49ec;
     margin-left: 5%;
     margin-right: 5%;
+}
+
+.Enseignement{
+    background: #15c7ff;
+}
+
+.Organisation{
+    background: #ff49ec;
+}
+
+.Planning{
+    background: #43ff1e;
+}
+
+.Comportement.et.Inicivilite{
+    background: #9a63ff;
+}
+
+.Problemes.Materiel{
+    background: #ff7f23;
 }
 
 form {
