@@ -33,12 +33,26 @@
         <br>
         <div id="partiebleue">
             Entrez une catégorie* :
-            <select size="1" name="category">
-                <option value = "Enseignement">Enseignement
+            <select size="1" name="category" class="form-control" onchange="change(this)">
+                <option value = "Planning">Planning
+                <option value = "Comportement et Inicivilité">Comportement et Inicivilité
+                <option value = "Problèmes Matériel">Problèmes Matériel
                 <option value = "Organisation">Organisation
-                <option value = "Aménagement et Matériel">Aménagement et Matériel
+                <option value = "Enseignement">Enseignement
             </select>
             <br><br>
+            <div hidden id="type_enseignement">
+                Entrez le cours* :
+                <select size="1" name="category" class="form-control">
+                    <option value = "Genie Logiciel">Genie Logiciel
+                    <option value = "TechnologiesWeb">Technologies Web
+                    <option value = "Cybersecurite">Cybersecurite
+                    <option value = "Algorithmique Programmation">Algorithmique et Programmation
+                    <option value = "Enseignement Culturel">Enseignement Culturel
+                    <option value = "Base de Donnees">Base de Donnees
+                </select>
+            </div>
+            <br>
             <input type="checkbox" name="anonymat">
             Cochez la case si vous voulez poster le message en format anonyme.
             <br><br>
@@ -48,7 +62,26 @@
         <br>
     </form>
 </div>
+
+
+
 </body>
 
 <img class="logo" src="pictures/logo_sans_nom.svg"/>
 </html>
+
+
+<script>
+    function change(obj) {
+        var selectBox = obj;
+        var selected = selectBox.options[selectBox.selectedIndex].value;
+        var textarea = document.getElementById("type_enseignement");
+
+        if(selected === 'Enseignement'){
+            textarea.style.display = "block";
+        }
+        else{
+            textarea.style.display = "none";
+        }
+    }
+</script>
