@@ -48,13 +48,12 @@
         <%
             ArrayList<message>  listeMessage = (ArrayList<message>) request.getAttribute("listeMessage");
             for (int i = 0; i < listeMessage.size(); i++ ){
-                //out.println(listeMessage.get(i).getText());
                 message mes = listeMessage.get(i);
                 String catego = mes.getCategories();
                 String valueAG = mes.getEtat() == 1 ? "a-1" :"a+1";
                 String valueDAG = mes.getEtat() == -1 ? "d-1":"d+1";
                 out.println(
-                        "<div class=\"type_enseignement\">\n" +
+                        "<div class=\"type_enseignement\" id=\""+catego +"\">\n" +
                                 "                <h1 class=\"etiquette\">"+catego+"</h1>\n" +
                                 "            </div>\n" +
                                 "            <div class=\"cadre_message\">\n" +
@@ -70,8 +69,8 @@
 
                                 //fin du if
 
-                                "                <button class=\"button_ok\" type=\"submit\" name=\""+mes.getIdMessage()+"\" value=\""+valueAG+"\">D'accord ("+mes.getAgree()+")</button>\n" +
-                                "                <button class=\"button_pasok\" type=\"submit\" name=\""+mes.getIdMessage()+"\" value=\""+valueDAG+"\">Pas d'accord ("+mes.getDisagree()+")</button>\n" +
+                                "                <button id=\"bons\" class=\"button_ok\" type=\"submit\" name=\""+mes.getIdMessage()+"\" value=\""+valueAG+"\">D'accord ("+mes.getAgree()+")</button>\n" +
+                                "                <button id=\"bpons\" class=\"button_pasok\" type=\"submit\" name=\""+mes.getIdMessage()+"\" value=\""+valueDAG+"\">Pas d'accord ("+mes.getDisagree()+")</button>\n" +
 
 
                                 "                <p class=\"utilisateur\">" + mes.getUsername() + mes.getTimestamp() +"</p>\n" + //ICI INPUT NOM + DATE UTILISATEUR

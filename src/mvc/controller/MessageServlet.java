@@ -30,7 +30,7 @@ public class MessageServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("coolitude");
+
         ArrayList<message> listeMessage ;
         if (request.getAttribute("tri") != null){
             listeMessage = md.trouverMessagesPertinence(0,10);
@@ -71,7 +71,6 @@ public class MessageServlet extends HttpServlet {
             etatMessage e = emd.trouver(idUser , mes.getIdMessage());
             if(e!= null)
             mes.setEtat(e.getEtat());
-            System.out.println(mes.getIdMessage() +"   " + e);
         }
         return list;
     }
