@@ -110,7 +110,6 @@ function PDesaccord(str){
 }
 
 function Selector (str){
-    alert(str);
     $('#triSel option[value='+str+']').prop('selected', true);
 }
 

@@ -91,8 +91,8 @@
                 if (mes.getIdReponse() != -1)out.println(
                                 // if reponse existe :
                                 "            <div class=\"cadre_reponse_util\">\n" +
-                                "                <p>"+ mes.getReponse() + "</p>\n" + //ICI INPUT REPONSE
-                                "                <p class=\"reponse_admin\">" + mes.getUsernameAnswer() + "DATE" +"</p>\n" + //ICI INPUT NOM + DATE ADMIN
+                                "                <p>"+ mes.getReponse() + "</p>\n" +
+                                "                <p class=\"reponse_admin\">" + mes.getUsernameAnswer() +"</p>\n" + //ICI INPUT NOM + DATE ADMIN
                                 "            </div>\n"
                 );
                                 //fin du if
@@ -114,7 +114,20 @@
 </div>
 
 </body>
-
+<form action="/MessageServlet" method="POST" >
+    <input type="hidden" name="page" value="<%=request.getAttribute("page")%>">
+    <input type="hidden" name="tri" value="<%=request.getAttribute("tri")%>">
+    <%int debut = (Integer) request.getAttribute("debut"); %>
+    <%if (debut != 0){
+        out.println("<button onclick=\"submit\" name=\"bouton_page\" value=\""+(debut-10)+"\"> Messages précédents </button>");
+    }%>
+    <%if (debut+10 < (Integer) request.getAttribute("nbrMessage")){
+        out.println("<button onclick=\"submit\" name=\"bouton_page\" value=\""+(debut+10)+"\"> Messages suivants </button>");
+    }%>
+<%--
+<button onclick="submit" name="boutton_page" value="pm"> Messages précédents </button><button onclick="submit" name="boutton_page" value="pp">Messages suivants</button>
+--%>
+</form>
 
 <img class="logo" src="pictures/logo_sans_nom.svg"/>
 </html>

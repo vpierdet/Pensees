@@ -30,18 +30,34 @@ public class MessageServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ArrayList<message> listeMessage = new ArrayList<>();
+        String triPara;
+        /**
+         * Récupération du mode de tri
+         */
         if (request.getParameter("tri") == null) request.setAttribute("tri", "Pertinence");
         else request.setAttribute("tri", request.getParameter("tri"));
-        ArrayList<message> listeMessage = new ArrayList<>();
-        int debut = 0;
-        int fin = 10;
-        System.out.println("attr :" + request.getAttribute("tri") + ", Param : " + request.getParameter("tri"));
 
-        if(request.getParameter("tri") != null) {
-            String tri = request.getParameter("tri");
-            tri = tri.replace("_", " ");
+        if(request.getParameter("tri") != null)triPara = request.getParameter("tri");
+        else triPara = (String) request.getAttribute("tri");
 
-            switch (tri) {
+        /**
+         * Gestion Page
+         */
+        int debut = request.getParameter("bouton_page") != null ? Integer.parseInt(request.getParameter("bouton_page")) : 0;
+        int fin = debut + 9;
+        int nombreMessages = md.Count(triPara.replace("Cat_",""), triPara.contains("Cat"));
+        if (debut == 0) request.setAttribute("page", 1);
+        request.setAttribute("debut" , debut);
+        request.setAttribute("nbrMessage", nombreMessages);
+
+        /**
+         * Recuperation message
+         */
+        if(!triPara.equals("")) {
+            triPara = triPara.replace("_", " ");
+
+            switch (triPara) {
                 case "Date":
                     listeMessage = md.trouverMessagesDate(debut, fin);
                     break;
@@ -51,9 +67,9 @@ public class MessageServlet extends HttpServlet {
                     break;
 
                 default:
-                    if (tri.contains("Cat ")) {
-                        tri = tri.substring(4);
-                        listeMessage = md.trouverMessagesCategorie(tri, debut, fin);
+                    if (triPara.contains("Cat ")) {
+                        triPara = triPara.substring(4);
+                        listeMessage = md.trouverMessagesCategorie(triPara, debut, fin);
                     } else listeMessage = md.trouverMessagesPertinence(debut, fin);
                     break;
 
@@ -63,10 +79,15 @@ public class MessageServlet extends HttpServlet {
             listeMessage = md.trouverMessagesPertinence(debut, fin);
         }
 
+        /**
+         * Recuperation etat personnel et les réponses du messages
+         */
         listeMessage = getEtat(listeMessage, request);
         listeMessage = getResponse(listeMessage);
 
-
+        /**
+         * Renvoi sur le file d'actu
+         */
         request.setAttribute("listeMessage", listeMessage);
         getServletContext().getRequestDispatcher("/FileActu.jsp").forward(request, response);
 

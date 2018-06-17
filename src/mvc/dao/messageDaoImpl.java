@@ -18,7 +18,8 @@ public class messageDaoImpl implements messageDao {
     private static final String SQL_UPDATE_AG_MOIN ="UPDATE Message SET Agree = Agree - 1 WHERE IdMessage = ?";
     private static final String SQL_UPDATE_DAG_PLUS ="UPDATE Message SET Disagree = Disagree + 1 WHERE IdMessage = ?";
     private static final String SQL_UPDATE_DAG_MOIN ="UPDATE Message SET Disagree = Disagree - 1 WHERE IdMessage = ?";
-
+    private static final String SQL_COUNT_CAT = "SELECT COUNT(*) FROM Message WHERE Categories LIKE  ? ";
+    private static final String SQL_COUNT_ALL = "SELECT COUNT(*) FROM Message";
 
     private static final String SQL_SELECT_CATEGORIE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Username ,Date FROM Message WHERE Categories LIKE  ?  ORDER BY Date DESC";
     private static final String SQL_SELECT_PERTINENCE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date, Username  FROM Message ORDER BY Agree DESC";
@@ -79,7 +80,6 @@ public class messageDaoImpl implements messageDao {
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        message mes = null;
         ArrayList<message> listeMessages = new ArrayList<>();
         int i = 0;
         try {
@@ -230,6 +230,34 @@ public class messageDaoImpl implements messageDao {
 
 
     @Override
+    public int Count(String tri, boolean catego) {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int total = 0;
+        String SQL = !catego ? SQL_COUNT_ALL : SQL_COUNT_CAT ;
+        tri+= "%";
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+
+            if (catego) preparedStatement = initialisationRequetePreparee(connexion, SQL, false,tri);
+            else preparedStatement = initialisationRequetePreparee(connexion, SQL, false);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                total = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+        }
+        return total;
+    }
+
+    @Override
     public ArrayList<message> trouverMessagesCategorie(String categorie, int debut, int fin) throws DAOException {
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -241,7 +269,6 @@ public class messageDaoImpl implements messageDao {
             /* Récupération d'une connexion depuis la Factory */
             connexion = daoFactory.getConnection();
             preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_CATEGORIE, false, categorie);
-            System.out.println(preparedStatement.toString());
             resultSet = preparedStatement.executeQuery();
             /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
             while (resultSet.next()) {
