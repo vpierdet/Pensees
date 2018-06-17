@@ -32,6 +32,7 @@ public class PostServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String textMessage = request.getParameter("user_message");
         String category = request.getParameter("category");
+        if (category.equals("Enseignement")) category += " - " + request.getParameter("category2");
         int idUser = (int)session.getAttribute("idUser");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String check = request.getParameter("anonymat");

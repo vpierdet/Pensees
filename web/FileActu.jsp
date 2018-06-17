@@ -35,15 +35,20 @@
 <body>
 <br>
 <div class="contour_bleu">
-    <form action="/" method="POST" id="triage">
+    <form action="/MessageServlet" method="POST" id="triage">
         <br>
         Trier par  :
-        <select size="1" name="username">
-            <option>Enseignement
-            <option>Organisation
-            <option>Aménagement et Matériel
+        <select size="1" name="tri" onchange="this.form.submit()">
+            <option  value="Date">Date
+            <option  value="Pertinence">Pertinence
+            <option value = "Cat_Planning">Planning
+            <option value = "Cat_Comportement et Inicivilite">Comportement et Inicivilité
+            <option value = "Cat_Problemes Materiel">Problèmes Matériel
+            <option value = "Cat_Organisation">Organisation
+            <option value = "Cat_Enseignement">Enseignement
         </select>
     </form>
+
     <div class="contour_jaune">
         <%
             ArrayList<message>  listeMessage = (ArrayList<message>) request.getAttribute("listeMessage");
@@ -52,6 +57,8 @@
                 String catego = mes.getCategories();
                 String valueAG = mes.getEtat() == 1 ? "a-1" :"a+1";
                 String valueDAG = mes.getEtat() == -1 ? "d-1":"d+1";
+                String valueCouleurAG = mes.getEtat() == 1 ? "bos" : "bons";
+                String valueCouleurDAG = mes.getEtat()== -1 ? "bpos":"bpons";
                 out.println(
                         "<div class=\"type_enseignement\" id=\""+catego +"\">\n" +
                                 "                <h1 class=\"etiquette "+catego+"\">"+catego+"</h1>\n" +
@@ -69,8 +76,8 @@
 
                                 //fin du if
 
-                                "                <button id=\"bons\" class=\"button_ok\" type=\"submit\" name=\""+mes.getIdMessage()+"\" value=\""+valueAG+"\">D'accord ("+mes.getAgree()+")</button>\n" +
-                                "                <button id=\"bpons\" class=\"button_pasok\" type=\"submit\" name=\""+mes.getIdMessage()+"\" value=\""+valueDAG+"\">Pas d'accord ("+mes.getDisagree()+")</button>\n" +
+                                "                <button id=\""+valueCouleurAG+"\" class=\"button_ok\" type=\"submit\" name=\""+mes.getIdMessage()+"\" value=\""+valueAG+"\">D'accord ("+mes.getAgree()+")</button>\n" +
+                                "                <button id=\""+valueCouleurDAG+"\" class=\"button_pasok\" type=\"submit\" name=\""+mes.getIdMessage()+"\" value=\""+valueDAG+"\">Pas d'accord ("+mes.getDisagree()+")</button>\n" +
 
 
                                 "                <p class=\"utilisateur\">" + mes.getUsername() + mes.getTimestamp() +"</p>\n" + //ICI INPUT NOM + DATE UTILISATEUR

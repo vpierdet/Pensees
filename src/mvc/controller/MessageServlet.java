@@ -30,25 +30,32 @@ public class MessageServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         ArrayList<message> listeMessage ;
+        int debut = 0;
+        int fin = 10;
         if (request.getAttribute("tri") != null){
-            listeMessage = md.trouverMessagesPertinence(0,10);
+            listeMessage = md.trouverMessagesPertinence(debut,fin);
 
         }
         else {
-            switch(request.getParameter("tri")){
-                case "date" : listeMessage = md.trouverMessagesDate(0,10);
+            String tri = request.getParameter("tri");
+
+            switch(tri){
+                case "Date" : listeMessage = md.trouverMessagesDate(debut,fin);
                      break;
 
-                     case "pertinence" :
-                     listeMessage = md.trouverMessagesPertinence(0,10);
+                     case "Pertinence" :
+                     listeMessage = md.trouverMessagesPertinence(debut,fin);
                     break;
 
-                default : listeMessage = md.trouverMessagesPertinence(0,10);
+                default :
+                    if (tri.contains("Cat_")){
+                        tri = tri.substring(4);
+                        listeMessage = md.trouverMessagesCategorie(tri , debut ,fin);
+                    }
+
+                    else  listeMessage = md.trouverMessagesPertinence(debut,fin);
                     break;
-
-
             }
         }
 

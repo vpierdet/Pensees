@@ -161,16 +161,16 @@ button{
 }
 
 #bons{
-    background: #7aff81;
-}
-#bons:hover{
-    background: #d0ffd1;
-}
-#bos{
     background:#d0ffd1;
 }
-#bos:hover{
+#bons:hover{
     background: #7aff81;
+}
+#bos{
+    background: #7aff81;
+}
+#bos:hover{
+    background: #d0ffd1;
 }
 
 
