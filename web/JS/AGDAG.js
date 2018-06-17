@@ -65,6 +65,9 @@ $('.button_pasok').on('click',function (e) {
     }
 });
 
+/**
+ * @return {string}
+ */
 function PAccord(str){
     var sf = "D'accord (";
     var num = str.substring(str.lastIndexOf("(")+1, str.lastIndexOf(")"));
@@ -73,6 +76,9 @@ function PAccord(str){
     return sf;
 }
 
+/**
+ * @return {string}
+ */
 function MAccord(str){
     var sf = "D'accord (";
     var num = str.substring(str.lastIndexOf("(")+1, str.lastIndexOf(")"));
@@ -81,6 +87,9 @@ function MAccord(str){
     return sf;
 }
 
+/**
+ * @return {string}
+ */
 function MDesaccord(str){
     var sf = "Pas d'accord (";
     var num = str.substring(str.lastIndexOf("(")+1,  str.lastIndexOf(")"));
@@ -89,6 +98,9 @@ function MDesaccord(str){
     return sf;
 }
 
+/**
+ * @return {string}
+ */
 function PDesaccord(str){
     var sf = "Pas d'accord (";
     var num = str.substring(str.lastIndexOf("(")+1,  str.lastIndexOf(")"));
@@ -96,3 +108,11 @@ function PDesaccord(str){
     sf = sf + newNum.toString() + ")";
     return sf;
 }
+
+function Selector (str){
+    alert(str);
+    $('#triSel option[value='+str+']').prop('selected', true);
+}
+
+
+

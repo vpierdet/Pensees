@@ -2,10 +2,8 @@ package mvc.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class message implements Serializable{
 
@@ -151,6 +149,13 @@ public class message implements Serializable{
         this.categories = listcategorie;
 
     }*/
+
+    public String getDate(){
+        Date d = new Date(date.getTime());
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yy  HH:mm");
+        String ds = df.format(d);
+        return ds;
+    }
 
     public boolean isFlagModeration() {
         return flagModeration;

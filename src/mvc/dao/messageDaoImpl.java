@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class messageDaoImpl implements messageDao {
     private DAOFactory daoFactory;
-    private static final String SQL_UPDATE_ADD = "INSERT INTO Message(TextMessage, IdUser, FlagModeration, Agree, Disagree, FlagAnswer, Date, Destinataires,Categories) VALUES(?,?,?,?,?,?,NOW(),?,?)";
+    private static final String SQL_UPDATE_ADD = "INSERT INTO Message(TextMessage, IdUser, FlagModeration, Agree, Disagree, FlagAnswer, Date, Destinataires,Categories, Username) VALUES(?,?,?,?,?,?,NOW(),?,?,?)";
     private static final String SQL_UPDATE_DELETE = "DELETE FROM Message WHERE condition";
     private static final String SQL_UPDATE_AG_PLUS ="UPDATE Message SET Agree = Agree + 1 WHERE IdMessage = ?";
     private static final String SQL_UPDATE_AG_MOIN ="UPDATE Message SET Agree = Agree - 1 WHERE IdMessage = ?";
@@ -40,7 +40,7 @@ public class messageDaoImpl implements messageDao {
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = daoFactory.getConnection();
-            preparedStatement = initialisationRequetePreparee(connexion, SQL_UPDATE_ADD, true, mes.getText(), mes.getIdUser(), mes.isFlagModeration(), mes.getAgree(), mes.getDisagree(), mes.isResolu(), 2, mes.getCategories());
+            preparedStatement = initialisationRequetePreparee(connexion, SQL_UPDATE_ADD, true, mes.getText(), mes.getIdUser(), mes.isFlagModeration(), mes.getAgree(), mes.getDisagree(), mes.isResolu(), 2, mes.getCategories(), mes.getUsername());
             int i = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
