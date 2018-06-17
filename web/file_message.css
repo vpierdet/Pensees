@@ -141,18 +141,40 @@ button{
     border-top-right-radius: 5px 5px;
 }
 
-.button_ok{
+#bons{
     background: #7aff81;
 }
-.button_ok:hover{
+#bons:hover{
     background: #d0ffd1;
 }
+#bos{
+    background:#d0ffd1;
+}
+#bos:hover{
+    background: #7aff81;
+}
 
+
+/*
 .button_pasok{
     background: #ff7c7c;
+}*/
+
+#bpos{
+    background: #ff7c7c;
 }
-.button_pasok:hover{
+
+#bpons{
     background: #ffc1c1;
+
+}
+
+#bpos:hover{
+    background: #ffc1c1;
+}
+
+#bpons:hover{
+    background: #ff7c7c;
 }
 
 .button_repondre{
