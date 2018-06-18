@@ -106,8 +106,6 @@ public class MessageServlet extends HttpServlet {
             default:break;
         }
 
-
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

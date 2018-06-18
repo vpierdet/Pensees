@@ -16,12 +16,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="file_message.css" />
+    <link rel="stylesheet" href="../css/file_message.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Fil Actualite</title>
 </head>
-<img class="bandeau" src="pictures/header_menu.svg"/>
+<img class="bandeau" src="../pictures/header_menu.svg"/>
 
 
 <ul id="menu_user">
@@ -108,6 +108,6 @@
 
 </body>
 
-<img class="logo" src="pictures/logo_sans_nom.svg"/>
+<img class="logo" src="../pictures/logo_sans_nom.svg"/>
 
 </html>

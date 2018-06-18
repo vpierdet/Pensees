@@ -46,7 +46,7 @@ public class CheckLoginServlet extends HttpServlet {
             }
             else{
                 System.out.println("mot de passe erroné");
-                getServletContext().getRequestDispatcher("/log").forward(request,response);
+                getServletContext().getRequestDispatcher("/log.jsp").forward(request,response);
             }
         }
 

@@ -4,7 +4,7 @@
     <%@ page import="mvc.model.message" %>
     <%@ page import="java.util.ArrayList" %>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="file_message.css" />
+    <link rel="stylesheet" href="css/file_message.css" />
     <title>File d'actualité</title>
 </head>
 <body>
@@ -15,7 +15,7 @@
     <li id ="activ_window"><a href="/MessageServlet">Fil Message</a></li>
     <li ><a href="/page_message.jsp">Publier</a></li>
     <li><a href="#">Votre Avis</a></li>
-    <li><a href="/signal.jsp">Signalement</a></li>
+    <li><a href="/vue/signal.jsp">Signalement</a></li>
     <li><a href="/deco">Déconnexion</a></li>
 </ul>
 <br>

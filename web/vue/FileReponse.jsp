@@ -15,13 +15,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="file_message.css" />
+    <link rel="stylesheet" href="../css/file_message.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"> </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="JS/AGDAG.js" type="text/javascript"></script>
+    <script src="../JS/AGDAG.js" type="text/javascript"></script>
     <title>Mes Messages</title>
 </head>
-<img class="bandeau" src="pictures/header_menu.svg"/>
+<img class="bandeau" src="../pictures/header_menu.svg"/>
 
 
 <ul id="menu_user">
@@ -29,7 +29,7 @@
     <li id="activ_window"><a href="/mas">Messages me concernant</a></li>
     <li><a href="/publier_user.html">Publier</a></li>
     <li><a href="#">Votre Avis</a></li>
-    <li><a href="/signal.jsp">Signalement</a></li>
+    <li><a href="/vue/signal.jsp">Signalement</a></li>
     <li><a href="/deco">Déconnexion</a></li>
 </ul>
 
@@ -142,7 +142,7 @@
 </body>
 
 
-<img class="logo" src="pictures/logo_sans_nom.svg"/>
-<script src="JS/AGDAG.js" type="text/javascript"></script>
+<img class="logo" src="../pictures/logo_sans_nom.svg"/>
+<script src="../JS/AGDAG.js" type="text/javascript"></script>
 
 </html>
