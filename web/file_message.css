@@ -31,7 +31,7 @@ body{
     margin:auto;   /* centrage pour élément similaire a block, si inline-block, alors text-align:center; sur le parent  */
     position: relative;
     z-index: 10;
-    margin-top: -34px;
+    margin-top: -2.7%;
     list-style-type:none;
     padding: auto;
 }
@@ -90,6 +90,7 @@ ul li form:hover {
 
 
 input{
+    font-family: Comfortaa;
     font-size: medium;
     border: none;
     background: none;
