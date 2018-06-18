@@ -17,7 +17,6 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="file_message.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"> </script>
-    <script src="JS/AGDAG.js" type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="JS/AGDAG.js" type="text/javascript"></script>
     <title>Mes Messages</title>
@@ -26,9 +25,7 @@
 
 
 <ul id="menu_user">
-    <li><form action="" method=""><input type="submit" name="" value=""></form></li>
-
-    <li><a href="/FileActu.jsp">Fil Message</a></li>
+    <li><a href="/MessageServlet">Fil Message</a></li>
     <li id="activ_window"><a href="/mas">Messages me concernant</a></li>
     <li><a href="/publier_user.html">Publier</a></li>
     <li><a href="#">Votre Avis</a></li>
@@ -42,7 +39,22 @@
 <body>
 <br>
 <div class="contour_bleu">
+    <form action="/mas" method="POST" id="triage">
+        <br>
+        Trier par  :
+        <% String triS;
+            if (request.getAttribute("tri") != null )
+             triS = (String) request.getAttribute("tri");
+        else triS = "date";%>
 
+        <select size="1" name="tri" onchange="this.form.submit()" id="triSel" >
+            <option value = "date">Tous
+            <option value = "repondu">Repondu
+            <option value = "nonrep">Non Repondu
+            <option value = "pertinence">Pertinence
+        </select>
+        <script type="text/javascript">Selector("<%=triS%>");</script>
+    </form>
     <div class="contour_jaune">
         <%
             ArrayList<message>  listeMessage = (ArrayList<message>) request.getAttribute("listeMessage");
@@ -71,17 +83,28 @@
                                 "                <button id=\""+valueCouleurDAG+"\" class=\"button_pasok\" type=\"submit\" name=\""+mes.getIdMessage()+"\" value=\""+valueDAG+"\">Pas d'accord ("+mes.getDisagree()+")</button>\n" +
 
 
-                                "                <p class=\"utilisateur\">" + mes.getUsername() +"   "+ mes.getDate() +"</p>\n " +
-                                "            </form>\n" + "<br><button onclick=\"hidendisplay("+i+")\" id=\"answer"+i+"\" class=\"button_repondre\" >Répondre</button>\n" +
+                                "                <p class=\"utilisateur\">" + mes.getUsername() +"   "+ mes.getDate() +"</p>\n ");
+                if (mes.getIdReponse() == -1)
+                out.println(
+                                "            <br></form>\n" + "<br><button onclick=\"hidendisplay("+i+")\" id=\"answer"+i+"\" class=\"button_repondre\" >Répondre</button>\n" +
                                 "            <form  method=\"POST\" action=\"/post\"> \n" +
-                                "                <input type=\"hidden\" name=\"idMes\" value=\""+mes.getIdMessage()+"\""+
+                                "                <input hidden name=\"idMes\" value=\""+mes.getIdMessage()+"\"/>"+
 
-                                "                <textarea style=\"display:none\" id=\"reponse"+i+"\"  class=\"cadre_reponse\" name=\"user_answer\">Entrez votre réponse ici...\n" +
-                                "                </textarea>\n" +
+                                "                <textarea hidden id=\"reponse"+i+"\"  class=\"cadre_reponse\" name=\"user_answer\">Entrez votre réponse ici.\n"+
+                                "</textarea>"+
                                 "                <br>\n" +
-                                "                <button hidden id=\"publish"+i+"\" class=\"button_repondre\" type=\"submit\" name=\"post\" value\"reponse\">Publier</button>\n" +
+                                "                <button hidden id=\"publish"+i+"\" class=\"button_repondre\" type=\"submit\" name=\"post\" value=\"reponse\">Publier</button>\n" +
                                 "\n" +
-                                "            </form>" +
+                                "            </form>");
+                else out.println(
+                        // if reponse existe :
+                        "            <div class=\"cadre_reponse_util\">\n" +
+                                "                <p>"+ mes.getReponse() + "</p>\n" +
+                                "                <p class=\"reponse_admin\">" + mes.getUsernameAnswer() +"</p>\n" + //ICI INPUT NOM + DATE ADMIN
+                                "            </div>\n"
+                );
+
+                out.println(
                                 "        </div>\n" +
                                 "\n" +
                                 "\n" +
@@ -91,7 +114,25 @@
 
 
         %>
-     >
+        <form action="/mas" method="POST" >
+            <input type="hidden" name="page" value="<%=request.getAttribute("page")%>">
+            <input type="hidden" name="tri" value="<%=request.getAttribute("tri")%>">
+            <div id="button_pages">
+
+
+                <%int debut = (Integer) request.getAttribute("debut"); %>
+                <%if (debut != 0){
+                    out.println("<button onclick=\"submit\" class=\"pages fleche precedent\" name=\"bouton_page\" value=\""+(debut-10)+"\">←</button>");
+                }%>
+                <button name="bouton_page" class="pages between">|</button>
+                <%if (debut+10 < (Integer) request.getAttribute("nbrMessage")){
+                    out.println("<button onclick=\"submit\" class=\"pages fleche suivant\" name=\"bouton_page\" value=\""+(debut+10)+"\">→</button>");
+                }%>
+                <%--
+                <button onclick="submit" name="boutton_page" value="pm"> Messages précédents </button><button onclick="submit" name="boutton_page" value="pp">Messages suivants</button>
+                --%>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -99,18 +140,7 @@
 </div>
 
 </body>
-<form action="/MessageServlet" method="POST" >
-    <input type="hidden" name="page" value="<%=request.getAttribute("page")%>">
-    <input type="hidden" name="tri" value="<%=request.getAttribute("tri")%>">
-    <%int debut = (Integer) request.getAttribute("debut"); %>
-    <%if (debut != 0){
-        out.println("<button onclick=\"submit\" name=\"bouton_page\" value=\""+(debut-10)+"\"> Messages précédents </button>");
-    }%>
-    <%if (debut+10 < (Integer) request.getAttribute("nbrMessage")){
-        out.println("<button onclick=\"submit\" name=\"bouton_page\" value=\""+(debut+10)+"\"> Messages suivants </button>");
-    }%>
 
-</form>
 
 <img class="logo" src="pictures/logo_sans_nom.svg"/>
 <script src="JS/AGDAG.js" type="text/javascript"></script>

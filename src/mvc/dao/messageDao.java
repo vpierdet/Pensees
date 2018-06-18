@@ -82,7 +82,14 @@ public interface messageDao {
      */
     ArrayList<message> trouverMessagesCategorie(String categorie, int debut, int fin)throws DAOException;
 
+    ArrayList<message> trouverMessagesCategoriePertinence(String categorie, int debut, int fin)throws DAOException;
+
+    ArrayList<message> trouverMessagesCategorieRepondu(String categorie, int debut, int fin , boolean repondu)throws DAOException;
+
+
     int Count(String tri , boolean catego);
+
+    int Count(String tri, boolean catego , boolean repondu);
 
     void Answer(int idMessage , int idAnswer);
 

@@ -36,23 +36,49 @@ public class MessageAdminServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         if (request.getParameter("action").equals("réponse")){
-
-        }
 
         HttpSession session = request.getSession();
          int idUser = (Integer) session.getAttribute("idUser");
         ArrayList<message> listeMessage = new ArrayList<>();
         categorie cat = cd.trouverUser(idUser);
+        String tri = request.getParameter("tri") != null ? request.getParameter("tri") : "date" ;
+        String catS = cat.getNom();
+
+        /**
+         * Gestion page
+         */
         int debut = request.getParameter("bouton_page") != null ? Integer.parseInt(request.getParameter("bouton_page")) : 0;
         int fin = debut + 9;
-        int nombreMessages = md.Count(cat.getNom(),true);
+        int nombreMessages;
+        if (tri.equals("date") || tri.equals("pertinence"))
+            nombreMessages = md.Count(cat.getNom(),true);
+        else{
+            boolean repondu = tri.equals("repondu") ? true : false;
+            nombreMessages = md.Count(cat.getNom(),true, repondu);
+        }
         if (debut == 0) request.setAttribute("page", 1);
         request.setAttribute("debut" , debut);
         request.setAttribute("nbrMessage", nombreMessages);
-        listeMessage = md.trouverMessagesCategorie(cat.getNom(),debut,fin);
+
+        /**
+         * Récupération messages
+         */
+        if (tri.equals("date")) listeMessage = md.trouverMessagesCategorie(catS,debut,fin);
+        if (tri.equals("pertinence")) listeMessage = md.trouverMessagesCategoriePertinence(catS,debut, fin);
+        if (tri.equals("repondu")) listeMessage = md.trouverMessagesCategorieRepondu(catS, debut ,fin, true);
+        if (tri.equals("nonrep")) listeMessage = md.trouverMessagesCategorieRepondu(catS, debut ,fin, false);
+
+        /**
+         * Récupérations autres infos messages
+         */
         listeMessage = getEtat(listeMessage, request);
         listeMessage = getResponse(listeMessage);
+
+        /**
+         * Renvoi sur la vue
+         */
+        System.out.println("nombre message : " + nombreMessages + "  methode tri : " + tri);
+        request.setAttribute("tri", tri);
         request.setAttribute("listeMessage", listeMessage);
         getServletContext().getRequestDispatcher("/FileReponse.jsp").forward(request, response);
 
@@ -91,7 +117,7 @@ public class MessageAdminServlet extends HttpServlet {
 
     private ArrayList<message> getResponse(ArrayList<message> list) {
         for (message mes : list) {
-            if (mes.isResolu()) {
+            if (mes.getIdReponse() != -1) {
                 answer ans = ad.trouverReponseIdMessage(mes.getIdMessage());
                 mes.setUsernameAnswer(ans.getUsername());
                 mes.setReponse(ans.getTxt());

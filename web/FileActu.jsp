@@ -133,6 +133,6 @@
 
 </body>
 
-
+<script src="JS/AGDAG.js" type="text/javascript"></script>
 <img class="logo" src="pictures/logo_sans_nom.svg"/>
 </html>

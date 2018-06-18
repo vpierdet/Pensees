@@ -13,12 +13,12 @@ public class DeconexxionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.invalidate();
-        getServletContext().getRequestDispatcher("/log.html").forward(request,response);
+        getServletContext().getRequestDispatcher("/log.jsp").forward(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.invalidate();
-        getServletContext().getRequestDispatcher("/log.html").forward(request,response);
+        getServletContext().getRequestDispatcher("/log.jsp").forward(request,response);
     }
 }

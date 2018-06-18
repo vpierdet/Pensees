@@ -69,6 +69,8 @@ public class PostServlet extends HttpServlet {
             int idAnswer = this.ad.ajouter(ans);
             this.mdi.Answer(idMes,idAnswer);
 
+            getServletContext().getRequestDispatcher("/mas").forward(request,response);
+
 
 
         }
