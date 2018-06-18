@@ -64,11 +64,38 @@ ul li a {
 
 
 }
+
 ul li a:hover {
     border-bottom:2px solid;
     border-color: #0061a1;
     cursor:pointer;
 }
+
+ul li form {
+    z-index: 10;
+    display:inline-block;
+    margin: 0 40px;
+    background-color: #fff2cc;
+    color:black;
+    text-decoration:none;
+    text-align:center;
+
+
+}
+ul li form:hover {
+    border-bottom:2px solid;
+    border-color: #0061a1;
+    cursor:pointer;
+}
+
+
+input{
+    font-size: medium;
+    border: none;
+    background: none;
+    margin-top: -4px;
+}
+
 /* fin de menu*/
 
 
@@ -137,16 +164,7 @@ form {
     padding-bottom: 5%;
 }
 
-input{
-    font-family: Comfortaa;
-    text-align: right;
-    border: none;
-    padding: 1% 5% 1% 5%;
-    border-bottom-left-radius: 5px 5px;
-    border-bottom-right-radius: 5px 5px;
-    border-top-left-radius: 5px 5px;
-    border-top-right-radius: 5px 5px;
-}
+
 
 button{
 
@@ -254,6 +272,26 @@ select {
 
 }
 
-.fleche{
+.pages {
+    padding: 5px 5px 5px 5px;
+    background: none;
+    font-style: normal;
+    font-size: large;
+    color: #0061a1;
+    position: relative;
+    margin-bottom:10px;
+}
 
+#button_pages{
+    position: relative;
+    margin-left: 39%;
+}
+
+.fleche:hover{
+    background: #0061a1;
+    color: white;
+}
+
+.between{
+    position: relative;
 }

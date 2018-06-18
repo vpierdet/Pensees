@@ -80,6 +80,26 @@
 
         %>
 
+        <form action="/MessageServlet" method="POST" >
+            <input type="hidden" name="page" value="<%=request.getAttribute("page")%>">
+            <input type="hidden" name="tri" value="<%=request.getAttribute("tri")%>">
+            <div id="button_pages">
+
+
+                <%int debut = (Integer) request.getAttribute("debut"); %>
+                <%if (debut != 0){
+                    out.println("<button onclick=\"submit\" class=\"pages fleche precedent\" name=\"bouton_page\" value=\""+(debut-10)+"\">←</button>");
+                }%>
+                <button name="bouton_page" class="pages between">|</button>
+                <%if (debut+10 < (Integer) request.getAttribute("nbrMessage")){
+                    out.println("<button onclick=\"submit\" class=\"pages fleche suivant\" name=\"bouton_page\" value=\""+(debut+10)+"\">→</button>");
+                }%>
+                <%--
+                <button onclick="submit" name="boutton_page" value="pm"> Messages précédents </button><button onclick="submit" name="boutton_page" value="pp">Messages suivants</button>
+                --%>
+            </div>
+        </form>
+
     </div>
 </div>
 
