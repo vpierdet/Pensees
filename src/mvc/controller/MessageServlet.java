@@ -24,40 +24,72 @@ public class MessageServlet extends HttpServlet {
     private answerDao ad;
 
     public void init() {
-        this.md = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getMessageDao();
-        this.emd = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY )).getEtatMessageDAO();
-        this.ad = ((DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY )).getAnswerDao();
+        this.md = ((DAOFactory) getServletContext().getAttribute(CONF_DAO_FACTORY)).getMessageDao();
+        this.emd = ((DAOFactory) getServletContext().getAttribute(CONF_DAO_FACTORY)).getEtatMessageDAO();
+        this.ad = ((DAOFactory) getServletContext().getAttribute(CONF_DAO_FACTORY)).getAnswerDao();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ArrayList<message> listeMessage = new ArrayList<>();
+        String triPara;
+        /**
+         * Récupération du mode de tri
+         */
+        if (request.getParameter("tri") == null) request.setAttribute("tri", "Pertinence");
+        else request.setAttribute("tri", request.getParameter("tri"));
 
-        ArrayList<message> listeMessage ;
-        if (request.getAttribute("tri") != null){
-            listeMessage = md.trouverMessagesPertinence(0,10);
+        if(request.getParameter("tri") != null)triPara = request.getParameter("tri");
+        else triPara = (String) request.getAttribute("tri");
 
-        }
-        else {
-            switch(request.getParameter("tri")){
-                case "date" : listeMessage = md.trouverMessagesDate(0,10);
-                     break;
+        /**
+         * Gestion Page
+         */
+        int debut = request.getParameter("bouton_page") != null ? Integer.parseInt(request.getParameter("bouton_page")) : 0;
+        int fin = debut + 9;
+        int nombreMessages = md.Count(triPara.replace("Cat_",""), triPara.contains("Cat"));
+        if (debut == 0) request.setAttribute("page", 1);
+        request.setAttribute("debut" , debut);
+        request.setAttribute("nbrMessage", nombreMessages);
 
-                     case "pertinence" :
-                     listeMessage = md.trouverMessagesPertinence(0,10);
+        /**
+         * Recuperation message
+         */
+        if(!triPara.equals("")) {
+            triPara = triPara.replace("_", " ");
+
+            switch (triPara) {
+                case "Date":
+                    listeMessage = md.trouverMessagesDate(debut, fin);
                     break;
 
-                default : listeMessage = md.trouverMessagesPertinence(0,10);
+                case "Pertinence":
+                    listeMessage = md.trouverMessagesPertinence(debut, fin);
                     break;
 
+                default:
+                    if (triPara.contains("Cat ")) {
+                        triPara = triPara.substring(4);
+                        listeMessage = md.trouverMessagesCategorie(triPara, debut, fin);
+                    } else listeMessage = md.trouverMessagesPertinence(debut, fin);
+                    break;
 
             }
         }
+        if (listeMessage == null){
+            listeMessage = md.trouverMessagesPertinence(debut, fin);
+        }
 
-        listeMessage = getEtat(listeMessage,request);
+        /**
+         * Recuperation etat personnel et les réponses du messages
+         */
+        listeMessage = getEtat(listeMessage, request);
         listeMessage = getResponse(listeMessage);
 
-
-        request.setAttribute("listeMessage" , listeMessage);
-        getServletContext().getRequestDispatcher("/FileActu.jsp").forward(request,response);
+        /**
+         * Renvoi sur le file d'actu
+         */
+        request.setAttribute("listeMessage", listeMessage);
+        getServletContext().getRequestDispatcher("/FileActu.jsp").forward(request, response);
 
 
     }
@@ -65,18 +97,18 @@ public class MessageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
     }
 
-    private ArrayList<message> getEtat(ArrayList<message> list,HttpServletRequest request){
+    private ArrayList<message> getEtat(ArrayList<message> list, HttpServletRequest request) {
         int idUser = (int) request.getSession().getAttribute("idUser");
-        for (message mes : list){
-            etatMessage e = emd.trouver(idUser , mes.getIdMessage());
-            if(e!= null)
-            mes.setEtat(e.getEtat());
+        for (message mes : list) {
+            etatMessage e = emd.trouver(idUser, mes.getIdMessage());
+            if (e != null)
+                mes.setEtat(e.getEtat());
         }
         return list;
     }
 
-    private ArrayList<message> getResponse(ArrayList<message> list){
-        for (message mes : list){
+    private ArrayList<message> getResponse(ArrayList<message> list) {
+        for (message mes : list) {
             if (mes.isResolu()) {
                 answer ans = ad.trouverReponseIdMessage(mes.getIdMessage());
                 mes.setUsernameAnswer(ans.getUsername());
@@ -85,8 +117,6 @@ public class MessageServlet extends HttpServlet {
         }
         return list;
     }
-
-
 
 
 }

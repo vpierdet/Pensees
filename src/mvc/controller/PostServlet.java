@@ -32,10 +32,12 @@ public class PostServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String textMessage = request.getParameter("user_message");
         String category = request.getParameter("category");
+        if (category.equals("Enseignement")) category += " - " + request.getParameter("category2");
         int idUser = (int)session.getAttribute("idUser");
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String check = request.getParameter("anonymat");
         String username;
+        System.out.println("ceci est un check : " +check);
         if(check == null){
             username = (String)session.getAttribute("username");
         }
@@ -46,6 +48,7 @@ public class PostServlet extends HttpServlet {
 
         if((textMessage != null)&&(!textMessage.isEmpty())){
             message mes = new message();
+            mes.setUsername(username);
             mes.setText(textMessage);
             mes.setCategories(category);
             mes.setIdUser(idUser);

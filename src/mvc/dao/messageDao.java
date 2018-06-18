@@ -74,14 +74,15 @@ public interface messageDao {
 
     /**
      *
-     * @param idUser
+     * @param categorie
      * @param debut
      * @param fin
-     * @return
+     * @return ref
      * @throws DAOException
      */
     ArrayList<message> trouverMessagesCategorie(String categorie, int debut, int fin)throws DAOException;
 
+    int Count(String tri , boolean catego);
 
 
 }
