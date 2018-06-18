@@ -13,12 +13,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
 @WebServlet(name = "MessageServlet", urlPatterns = {"/MessageServlet"})
 public class MessageServlet extends HttpServlet {
     private static final String CONF_DAO_FACTORY = "daofactory";
+    private static final String VUE_NORMAL_USER = "/FileActu.jsp";
+    private static final String VUE_REP = "/FileReponse.jsp";
+    private static final String VUE_ADMIN = "/FileActuAdmin.jsp";
+
     private messageDao md;
     private etatMessageDao emd;
     private answerDao ad;
@@ -32,6 +37,7 @@ public class MessageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<message> listeMessage = new ArrayList<>();
         String triPara;
+        HttpSession session = request.getSession();
         /**
          * Récupération du mode de tri
          */
@@ -88,8 +94,18 @@ public class MessageServlet extends HttpServlet {
         /**
          * Renvoi sur le file d'actu
          */
+
         request.setAttribute("listeMessage", listeMessage);
-        getServletContext().getRequestDispatcher("/FileActu.jsp").forward(request, response);
+
+        int userType = (Integer)session.getAttribute("userType");
+
+        switch (userType){
+            case 0 : getServletContext().getRequestDispatcher(VUE_NORMAL_USER).forward(request, response); break;
+            case 1 : getServletContext().getRequestDispatcher(VUE_NORMAL_USER).forward(request, response); break;
+            case 2 : getServletContext().getRequestDispatcher(VUE_ADMIN).forward(request, response); break;
+            default:break;
+        }
+
 
 
     }

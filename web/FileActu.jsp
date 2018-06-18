@@ -26,7 +26,10 @@
 
 <ul id="menu_user">
     <li id="activ_window"><a href="#">Fil Message</a></li>
-    <li><a href="/publier_user.html">Publier</a></li>
+    <%if ((Integer)session.getAttribute("userType") == 1){
+        out.println("<li><a href=\"/mas\" method=\"POST\">Messages me concernant</a></li>");
+    }%>
+    <li><a href="/publier_user.html" >Publier</a></li>
     <li><a href="#">Votre Avis</a></li>
     <li><a href="/signal.jsp">Signalement</a></li>
     <li><a href="/deco">Déconnexion</a></li>
@@ -76,11 +79,7 @@
                                 "                <br>\n" +
 
                                 "                <input type=\"hidden\" class=\"idmes\" value=\"" +mes.getIdMessage() +"\"/>"+
-                                // if deja vote : enlever type:"submit" sur les 2 boutons ok/pas ok
-                                //"                <button style=\"background: #d0ffd1\" class=\"button_ok\" type=\"submit\" name=\""+mes.getIdMessage()+"\" value=\""+valueAG+"\">D'accord ("+mes.getAgree()+")</button>\n" +
-                                //"                <button style=\"background: #ffc1c1\" class=\"button_pasok\" type=\"submit\" name=\""+mes.getIdMessage()+"\" value=\""+valueDAG+"\">Pas d'accord ("+mes.getDisagree()+")</button>\n" +
 
-                                //fin du if
 
                                 "                <button id=\""+valueCouleurAG+"\" class=\"button_ok\" type=\"submit\" name=\""+mes.getIdMessage()+"\" value=\""+valueAG+"\">D'accord ("+mes.getAgree()+")</button>\n" +
                                 "                <button id=\""+valueCouleurDAG+"\" class=\"button_pasok\" type=\"submit\" name=\""+mes.getIdMessage()+"\" value=\""+valueDAG+"\">Pas d'accord ("+mes.getDisagree()+")</button>\n" +

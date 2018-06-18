@@ -114,4 +114,14 @@ function Selector (str){
 }
 
 
+function hidendisplay(x) {
+    var answer = document.getElementById('answer'+x.toString());
+    var textarea = document.getElementById('reponse'+x.toString());
+    var publish = document.getElementById('publish'+x.toString());
+    answer.style.display = "none";
+    textarea.style.display = "block";
+    publish.style.display = "block";
+
+
+}
 
