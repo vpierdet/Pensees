@@ -3,6 +3,8 @@ package mvc.controller;
 import mvc.dao.DAOFactory;
 import mvc.dao.messageDao;
 import mvc.model.message;
+import mvc.dao.answerDao;
+import mvc.model.answer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Timestamp;
 
 @WebServlet(name = "PostServlet", urlPatterns = {"/post"})
 public class PostServlet extends HttpServlet {
@@ -21,48 +21,59 @@ public class PostServlet extends HttpServlet {
     public static final String ATT_FORM         = "form";
     public static final String VUE              = "/WEB-INF/inscription.jsp";
     private messageDao mdi;
+    private answerDao ad;
 
     public void init() {
         /* Récupération d'une instance de notre DAO Utilisateur */
         this.mdi = ( (DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getMessageDao();
+        this.ad = ( (DAOFactory) getServletContext().getAttribute( CONF_DAO_FACTORY ) ).getAnswerDao();
 
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String textMessage = request.getParameter("user_message");
-        String category = request.getParameter("category");
-        if (category.equals("Enseignement")) category += " - " + request.getParameter("category2");
         int idUser = (int)session.getAttribute("idUser");
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        String check = request.getParameter("anonymat");
-        String username;
-        System.out.println("ceci est un check : " +check);
-        if(check == null){
-            username = (String)session.getAttribute("username");
+        String username = (String)session.getAttribute("username");
+
+        if (request.getParameter("post").equals("message")){
+            String textMessage = request.getParameter("user_message");
+            String category = request.getParameter("category");
+            if (category.equals("Enseignement")) category += " - " + request.getParameter("category2");
+            String check = request.getParameter("anonymat");
+            System.out.println("ceci est un check : " +check);
+            if(check != null) username = "anonyme";
+            if((textMessage != null)&&(!textMessage.isEmpty())){
+                message mes = new message();
+                mes.setUsername(username);
+                mes.setText(textMessage);
+                mes.setCategories(category);
+                mes.setIdUser(idUser);
+                mes.setUsername(username);
+                this.mdi.ajouter(mes);
+                getServletContext().getRequestDispatcher("/essai").forward(request,response);
+
+            }
+            else{
+                getServletContext().getRequestDispatcher("/publier_user.html").forward(request,response);
+
+            }
         }
-        else{
-            username = "anonyme";
-        }
 
+        else if (request.getParameter("post").equals("reponse")){
+            answer ans = new answer();
+            int idMes = Integer.parseInt(request.getParameter("idMes"));
+            ans.setUsername(username);
+            ans.setIdUser(idUser);
+            ans.setTxt(request.getParameter("user_answer"));
+            ans.setIdMessage(idMes);
+            int idAnswer = this.ad.ajouter(ans);
+            this.mdi.Answer(idMes,idAnswer);
 
-        if((textMessage != null)&&(!textMessage.isEmpty())){
-            message mes = new message();
-            mes.setUsername(username);
-            mes.setText(textMessage);
-            mes.setCategories(category);
-            mes.setIdUser(idUser);
-            mes.setTimestamp(timestamp);
-            mes.setUsername(username);
-            this.mdi.ajouter(mes);
-            getServletContext().getRequestDispatcher("/essai").forward(request,response);
-
-        }
-        else{
-            getServletContext().getRequestDispatcher("/publier_user.html").forward(request,response);
 
 
         }
+
+
 
 
 

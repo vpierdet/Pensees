@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public interface answerDao {
 
-    void ajouter(answer ans)throws DAOException;
+    int ajouter(answer ans)throws DAOException;
     void supprimer(answer ans)throws DAOException;
     void modifier(answer ans)throws DAOException;
     ArrayList<answer> trouverReponseIdUser(int idUser)throws DAOException;

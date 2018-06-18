@@ -20,6 +20,7 @@ public class messageDaoImpl implements messageDao {
     private static final String SQL_UPDATE_DAG_MOIN ="UPDATE Message SET Disagree = Disagree - 1 WHERE IdMessage = ?";
     private static final String SQL_COUNT_CAT = "SELECT COUNT(*) FROM Message WHERE Categories LIKE  ? ";
     private static final String SQL_COUNT_ALL = "SELECT COUNT(*) FROM Message";
+    private static final String SQL_UPDATE_ANS = "UPDATE Message SET IdAnswer = ? WHERE IdMessage = ?";
 
     private static final String SQL_SELECT_CATEGORIE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Username ,Date FROM Message WHERE Categories LIKE  ?  ORDER BY Date DESC";
     private static final String SQL_SELECT_PERTINENCE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date, Username  FROM Message ORDER BY Agree DESC";
@@ -203,6 +204,26 @@ public class messageDaoImpl implements messageDao {
             fermeturesSilencieuses( valeursAutoGenerees, preparedStatement, connexion );
         }
 
+    }
+
+    @Override
+    public void Answer(int idMessage, int idAnswer) {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_ANS, true , idAnswer, idMessage);
+            preparedStatement.executeUpdate();
+            /* Récupération de l'id auto-généré par la requête d'insertion */
+            valeursAutoGenerees = preparedStatement.getGeneratedKeys();
+        } catch ( SQLException e ) {
+            throw new DAOException( e );
+        } finally {
+            fermeturesSilencieuses( valeursAutoGenerees, preparedStatement, connexion );
+        }
     }
 
     @Override

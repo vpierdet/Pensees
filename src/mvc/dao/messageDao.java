@@ -84,5 +84,6 @@ public interface messageDao {
 
     int Count(String tri , boolean catego);
 
+    void Answer(int idMessage , int idAnswer);
 
 }

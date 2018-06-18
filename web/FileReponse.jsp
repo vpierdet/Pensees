@@ -73,11 +73,13 @@
 
                                 "                <p class=\"utilisateur\">" + mes.getUsername() +"   "+ mes.getDate() +"</p>\n " +
                                 "            </form>\n" + "<br><button onclick=\"hidendisplay("+i+")\" id=\"answer"+i+"\" class=\"button_repondre\" >Répondre</button>\n" +
-                                "            <form  method=\"post\"> \n" +
-                                "                <textarea hidden id=\"reponse"+i+"\"  class=\"cadre_reponse\">Entrez votre réponse ici.\n" + //ENTREE FORM TEXTE
+                                "            <form  method=\"POST\" action=\"/post\"> \n" +
+                                "                <input type=\"hidden\" name=\"idMes\" value=\""+mes.getIdMessage()+"\""+
+
+                                "                <textarea style=\"display:none\" id=\"reponse"+i+"\"  class=\"cadre_reponse\" name=\"user_answer\">Entrez votre réponse ici...\n" +
                                 "                </textarea>\n" +
                                 "                <br>\n" +
-                                "                <button hidden id=\"publish"+i+"\" class=\"button_repondre\" type=\"submit\" >Publier</button>\n" +
+                                "                <button hidden id=\"publish"+i+"\" class=\"button_repondre\" type=\"submit\" name=\"post\" value\"reponse\">Publier</button>\n" +
                                 "\n" +
                                 "            </form>" +
                                 "        </div>\n" +
@@ -87,8 +89,9 @@
                 );
             }
 
-        %>
 
+        %>
+     >
     </div>
 </div>
 

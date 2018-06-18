@@ -24,19 +24,22 @@ public class answerDaoImpl implements answerDao{
 
 
     @Override
-    public void ajouter(answer ans) throws DAOException {
+    public int ajouter(answer ans) throws DAOException {
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
+        int i = 0;
         try {
             /* Récupération d'une connexion depuis la Factory */
             connexion = daoFactory.getConnection();
             preparedStatement = initialisationRequetePreparee(connexion, SQL_UPDATE_ADD, true, ans.getIdMessage(), ans.getIdUser(), ans.getTxt(), ans.getUsername());
-            preparedStatement.executeUpdate();
+            i = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             fermeturesSilencieuses( preparedStatement, connexion);
         }
+        System.out.println(i);
+        return i;
     }
 
     @Override
