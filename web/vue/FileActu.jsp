@@ -26,9 +26,9 @@
 
 <ul id="menu_user">
     <li id="activ_window"><a href="#">Fil Message</a></li>
-    <%if ((Integer)session.getAttribute("userType") == 1){
-        out.println("<li><a href=\"/mas\">Messages me concernant</a></li>");
-    }%>
+    <%int ut =(Integer)session.getAttribute("userType"); %>
+    <%if (ut == 1) out.println("<li><a href=\"/mas\">Messages me concernant</a></li>");%>
+    <%if (ut == 2) out.println("<li><a href=\"/Moderation.jsp\">Messages me concernant</a></li>");%>
     <li><a href="/vue/publier.jsp" >Publier</a></li>
     <li><a href="#">Votre Avis</a></li>
     <li><a href="/vue/signal.jsp">Signalement</a></li>

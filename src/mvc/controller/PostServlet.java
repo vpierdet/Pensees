@@ -19,7 +19,7 @@ public class PostServlet extends HttpServlet {
     public static final String CONF_DAO_FACTORY = "daofactory";
     public static final String SERV_MESADMIN = "/MessageAdminServlet";
     private static final String SERV_NORMAL_USER = "/MessageServlet";
-    private static final String VUE_PUBLIER = "/vue/publier_user.html";
+    private static final String VUE_PUBLIER = "/vue/publier.jsp.html";
     private messageDao mdi;
     private answerDao ad;
 
