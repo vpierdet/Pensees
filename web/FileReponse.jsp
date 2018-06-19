@@ -104,12 +104,16 @@
     <input type="hidden" name="tri" value="<%=request.getAttribute("tri")%>">
     <%int debut = (Integer) request.getAttribute("debut"); %>
     <%if (debut != 0){
-        out.println("<button onclick=\"submit\" name=\"bouton_page\" value=\""+(debut-10)+"\"> Messages précédents </button>");
+        out.println("<button onclick=\"submit\" class=\"pages fleche precedent\" name=\"bouton_page\" value=\""+(debut-10)+"\">←</button>");
+    }else{
+        out.println("<button name=\"bouton_page\" class=\"pages\" style=\"color:#FFF2CC;\">←</button>");
     }%>
+    <button name="bouton_page" class="pages between">|</button>
     <%if (debut+10 < (Integer) request.getAttribute("nbrMessage")){
-        out.println("<button onclick=\"submit\" name=\"bouton_page\" value=\""+(debut+10)+"\"> Messages suivants </button>");
+        out.println("<button onclick=\"submit\" class=\"pages fleche suivant\" name=\"bouton_page\" value=\""+(debut+10)+"\">→</button>");
+    }else{
+        out.println("<button name=\"bouton_page\" class=\"pages\" style=\"color:#FFF2CC;\">→</button>");
     }%>
-
 </form>
 
 <img class="logo" src="pictures/logo_sans_nom.svg"/>
