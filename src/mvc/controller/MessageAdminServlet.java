@@ -19,10 +19,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "MessageAdminServlet", urlPatterns = {"/mas"})
+@WebServlet(name = "MessageAdminServlet", urlPatterns = {"/mas","/MessageAdminServlet"})
 public class MessageAdminServlet extends HttpServlet {
 
     private static final String CONF_DAO_FACTORY = "daofactory";
+    private static final String VUE_FILEREP = "/vue/FileReponse.jsp";
     private messageDao md;
     private etatMessageDao emd;
     private answerDao ad;
@@ -80,7 +81,8 @@ public class MessageAdminServlet extends HttpServlet {
         System.out.println("nombre message : " + nombreMessages + "  methode tri : " + tri);
         request.setAttribute("tri", tri);
         request.setAttribute("listeMessage", listeMessage);
-        getServletContext().getRequestDispatcher("/FileReponse.jsp").forward(request, response);
+
+        getServletContext().getRequestDispatcher(VUE_FILEREP).forward(request, response);
 
     }
 
@@ -100,7 +102,7 @@ public class MessageAdminServlet extends HttpServlet {
         listeMessage = getResponse(listeMessage);
         request.setAttribute("listeMessage", listeMessage);
 
-        getServletContext().getRequestDispatcher("/FileReponse.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher(VUE_FILEREP).forward(request, response);
 
     }
 

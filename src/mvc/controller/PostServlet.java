@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "PostServlet", urlPatterns = {"/post"})
+@WebServlet(name = "PostServlet", urlPatterns = {"/post","/PostServlet"})
 public class PostServlet extends HttpServlet {
     public static final String CONF_DAO_FACTORY = "daofactory";
-    public static final String ATT_USER         = "utilisateur";
-    public static final String ATT_FORM         = "form";
-    public static final String VUE              = "/WEB-INF/inscription.jsp";
+    public static final String SERV_MESADMIN = "/MessageAdminServlet";
+    private static final String VUE_NORMAL_USER = "/vue/FileActu.jsp";
+    private static final String VUE_PUBLIER = "/vue/publier_user.html";
     private messageDao mdi;
     private answerDao ad;
 
@@ -50,11 +50,11 @@ public class PostServlet extends HttpServlet {
                 mes.setIdUser(idUser);
                 mes.setUsername(username);
                 this.mdi.ajouter(mes);
-                getServletContext().getRequestDispatcher("/essai").forward(request,response);
+                getServletContext().getRequestDispatcher(VUE_NORMAL_USER).forward(request,response);
 
             }
             else{
-                getServletContext().getRequestDispatcher("/publier_user.html").forward(request,response);
+                getServletContext().getRequestDispatcher(VUE_PUBLIER).forward(request,response);
 
             }
         }
@@ -69,7 +69,7 @@ public class PostServlet extends HttpServlet {
             int idAnswer = this.ad.ajouter(ans);
             this.mdi.Answer(idMes,idAnswer);
 
-            getServletContext().getRequestDispatcher("/mas").forward(request,response);
+            getServletContext().getRequestDispatcher(SERV_MESADMIN).forward(request,response);
 
 
 

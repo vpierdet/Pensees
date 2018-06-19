@@ -29,7 +29,7 @@
     <%if ((Integer)session.getAttribute("userType") == 1){
         out.println("<li><a href=\"/mas\">Messages me concernant</a></li>");
     }%>
-    <li><a href="/publier_user.html" >Publier</a></li>
+    <li><a href="/vue/publier_user.html" >Publier</a></li>
     <li><a href="#">Votre Avis</a></li>
     <li><a href="/vue/signal.jsp">Signalement</a></li>
     <li><a href="/deco">Déconnexion</a></li>

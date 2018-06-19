@@ -20,9 +20,8 @@ import java.util.ArrayList;
 @WebServlet(name = "MessageServlet", urlPatterns = {"/MessageServlet"})
 public class MessageServlet extends HttpServlet {
     private static final String CONF_DAO_FACTORY = "daofactory";
-    private static final String VUE_NORMAL_USER = "/FileActu.jsp";
-    private static final String VUE_REP = "/FileReponse.jsp";
-    private static final String VUE_ADMIN = "/FileActuAdmin.jsp";
+    private static final String VUE_NORMAL_USER = "/vue/FileActu.jsp";
+    private static final String VUE_ADMIN = "/vue/FileActuAdmin.jsp";
 
     private messageDao md;
     private etatMessageDao emd;
