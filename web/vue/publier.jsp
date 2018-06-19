@@ -6,7 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Comfortaa" />
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../css/publier.css" />
