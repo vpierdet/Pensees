@@ -29,7 +29,7 @@
     <%if ((Integer)session.getAttribute("userType") == 1){
         out.println("<li><a href=\"/mas\">Messages me concernant</a></li>");
     }%>
-    <li><a href="/vue/publier_user.html" >Publier</a></li>
+    <li><a href="/vue/publier.jsp" >Publier</a></li>
     <li><a href="#">Votre Avis</a></li>
     <li><a href="/vue/signal.jsp">Signalement</a></li>
     <li><a href="/deco">Déconnexion</a></li>
@@ -116,13 +116,13 @@
             <%if (debut != 0){
                 out.println("<button onclick=\"submit\" class=\"pages fleche precedent\" name=\"bouton_page\" value=\""+(debut-10)+"\">←</button>");
             }else{
-                out.println("<button name=\"bouton_page\" class=\"pages\" style=\"color:#FFF2CC;\">←</button>");
+                out.println("<button name=\"bouton_page\" class=\"pages\" style=\"color:#FFF2CC;\" disabled>←</button>");
             }%>
             <button name="bouton_page" class="pages between">|</button>
             <%if (debut+10 < (Integer) request.getAttribute("nbrMessage")){
                 out.println("<button onclick=\"submit\" class=\"pages fleche suivant\" name=\"bouton_page\" value=\""+(debut+10)+"\">→</button>");
             }else{
-                out.println("<button name=\"bouton_page\" class=\"pages\" style=\"color:#FFF2CC;\">→</button>");
+                out.println("<button name=\"bouton_page\" class=\"pages\" style=\"color:#FFF2CC;\" disabled></button>");
             }%>
             <%--
             <button onclick="submit" name="boutton_page" value="pm"> Messages précédents </button><button onclick="submit" name="boutton_page" value="pp">Messages suivants</button>

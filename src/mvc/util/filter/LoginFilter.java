@@ -25,7 +25,7 @@ public class LoginFilter implements Filter {
         HttpSession session = request.getSession(false);
         if ((session == null || session.getAttribute("idUser") == null) && !((HttpServletRequest) req).getRequestURI().equals("/checklog")) {
 
-            request.getRequestDispatcher( "/log.jsp" ).forward( request, response );
+            request.getRequestDispatcher( "/vue/log.html" ).forward( request, response );
 
         } else {
             chain.doFilter(req, res); // Logged-in user found, so just continue request.

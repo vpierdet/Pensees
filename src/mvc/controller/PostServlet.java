@@ -18,7 +18,7 @@ import java.io.IOException;
 public class PostServlet extends HttpServlet {
     public static final String CONF_DAO_FACTORY = "daofactory";
     public static final String SERV_MESADMIN = "/MessageAdminServlet";
-    private static final String VUE_NORMAL_USER = "/vue/FileActu.jsp";
+    private static final String SERV_NORMAL_USER = "/MessageServlet";
     private static final String VUE_PUBLIER = "/vue/publier_user.html";
     private messageDao mdi;
     private answerDao ad;
@@ -50,7 +50,7 @@ public class PostServlet extends HttpServlet {
                 mes.setIdUser(idUser);
                 mes.setUsername(username);
                 this.mdi.ajouter(mes);
-                getServletContext().getRequestDispatcher(VUE_NORMAL_USER).forward(request,response);
+                getServletContext().getRequestDispatcher(SERV_NORMAL_USER).forward(request,response);
 
             }
             else{
