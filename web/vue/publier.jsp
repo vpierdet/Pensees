@@ -1,6 +1,11 @@
-<!DOCTYPE html>
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Comfortaa" />
-<script type="text/javascript" src="/JS/Jpublier.js"></script>
+<%--
+  Created by IntelliJ IDEA.
+  User: valentin
+  Date: 19/06/2018
+  Time: 18:32
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">

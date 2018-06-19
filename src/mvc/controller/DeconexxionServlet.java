@@ -11,7 +11,7 @@ import java.io.IOException;
 @WebServlet(name = "DeconexxionServlet", urlPatterns = {"/deco","/DeconexxionServlet"})
 public class DeconexxionServlet extends HttpServlet {
 
-    private static final String VUE_LOG = "/vue/log.jsp";
+    private static final String VUE_LOG = "/vue/log.html";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
