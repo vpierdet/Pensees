@@ -16,7 +16,10 @@ public class categorieDaoImpl implements categorieDao{
     private DAOFactory daoFactory;
     private static final String SQL_UPDATE_ADD = "";
     private static final String SQL_UPDATE_DELETE = "";
-    private static final String SQL_UPDATE_MODIFY = "";
+
+
+
+    private static final String SQL_UPDATE_LIER = "UPDATE Category SET idUser1 = ? WHERE Name LIKE ?";
     private static final String SQL_SELECT_NAME= "";
     private static  final String SQL_SELECT_USER = "SELECT idUser1, idUser2, Name, IdCategory FROM Category WHERE idUser1 = ? OR idUser2 = ? ";
 
@@ -24,7 +27,26 @@ public class categorieDaoImpl implements categorieDao{
     categorieDaoImpl (DAOFactory daoFactory){this.daoFactory = daoFactory;}
 
 
+    @Override
+    public void lier(int idUser, String catego) throws DAOException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet valeursAutoGenerees = null;
+        catego += "%";
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee( connexion, SQL_UPDATE_LIER, true , idUser, catego);
+            preparedStatement.executeUpdate();
+            /* Récupération de l'id auto-généré par la requête d'insertion */
+            valeursAutoGenerees = preparedStatement.getGeneratedKeys();
+        } catch ( SQLException e ) {
+            throw new DAOException( e );
+        } finally {
+            fermeturesSilencieuses( valeursAutoGenerees, preparedStatement, connexion );
+        }
 
+    }
 
     @Override
     public void ajouter(categorie catego) throws DAOException {
@@ -45,6 +67,8 @@ public class categorieDaoImpl implements categorieDao{
     public categorie trouver(String nom) throws DAOException {
         return null;
     }
+
+
 
     @Override
     public categorie trouverUser(int idUser) throws DAOException {

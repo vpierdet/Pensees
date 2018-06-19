@@ -62,7 +62,7 @@
                 //	$("h1").text('Le résultat est :' + data);
             })
             .fail(function (data) {
-                alert('ça marche pas');
+                alert('Erreur réseau');
             });
     });
 </script>

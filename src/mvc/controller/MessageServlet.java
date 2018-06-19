@@ -20,8 +20,7 @@ import java.util.ArrayList;
 @WebServlet(name = "MessageServlet", urlPatterns = {"/MessageServlet"})
 public class MessageServlet extends HttpServlet {
     private static final String CONF_DAO_FACTORY = "daofactory";
-    private static final String VUE_NORMAL_USER = "/vue/FileActu.jsp";
-    private static final String VUE_ADMIN = "/vue/FileActuAdmin.jsp";
+    private static final String VUE_FILE_ACTU = "/vue/FileActu.jsp";
 
     private messageDao md;
     private etatMessageDao emd;
@@ -96,14 +95,7 @@ public class MessageServlet extends HttpServlet {
 
         request.setAttribute("listeMessage", listeMessage);
 
-        int userType = (Integer)session.getAttribute("userType");
-
-        switch (userType){
-            case 0 : getServletContext().getRequestDispatcher(VUE_NORMAL_USER).forward(request, response); break;
-            case 1 : getServletContext().getRequestDispatcher(VUE_NORMAL_USER).forward(request, response); break;
-            case 2 : getServletContext().getRequestDispatcher(VUE_ADMIN).forward(request, response); break;
-            default:break;
-        }
+        getServletContext().getRequestDispatcher(VUE_FILE_ACTU).forward(request, response);
 
     }
 
