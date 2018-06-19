@@ -11,10 +11,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="signal.css" />
+    <link rel="stylesheet" href="../css/signal.css" />
     <title>Signaler</title>
 </head>
-<img class="bandeau" src="pictures/header_menu.svg"/>
+<img class="bandeau" src="../pictures/header_menu.svg"/>
 
 <ul id="menu_user">
     <li><a href="/MessageServlet">Fil Message</a></li>
@@ -55,7 +55,7 @@
     </div>
 </form>
 
-<img class="logo" src="pictures/logo_sans_nom.svg"/>
+<img class="logo" src="../pictures/logo_sans_nom.svg"/>
 </body>
 
 </html>

@@ -35,16 +35,18 @@ public class CheckLoginServlet extends HttpServlet {
         else{
             if(passwordForm.equals(userFound.getPassword())){
                 HttpSession session = request.getSession();
+                int idUser = userFound.getIdUser();
+
                 session.setAttribute("userType", userFound.getUserType());
                 session.setAttribute("username", usernameForm);
-                int idUser = userFound.getIdUser();
                 session.setAttribute("idUser", idUser);
+
                 request.setAttribute("tri", "default");
                 getServletContext().getRequestDispatcher("/MessageServlet").forward(request,response);
             }
             else{
                 System.out.println("mot de passe erroné");
-                getServletContext().getRequestDispatcher("/log").forward(request,response);
+                getServletContext().getRequestDispatcher("/log.jsp").forward(request,response);
             }
         }
 

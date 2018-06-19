@@ -32,13 +32,14 @@ public class answerDaoImpl implements answerDao{
             /* Récupération d'une connexion depuis la Factory */
             connexion = daoFactory.getConnection();
             preparedStatement = initialisationRequetePreparee(connexion, SQL_UPDATE_ADD, true, ans.getIdMessage(), ans.getIdUser(), ans.getTxt(), ans.getUsername());
-            i = preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
+           ResultSet res =  preparedStatement.getGeneratedKeys();
+           if (res.next())i = res.getInt(1);
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {
             fermeturesSilencieuses( preparedStatement, connexion);
         }
-        System.out.println(i);
         return i;
     }
 

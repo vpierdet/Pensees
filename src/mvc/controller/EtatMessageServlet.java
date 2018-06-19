@@ -27,8 +27,7 @@ public class EtatMessageServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
-        System.out.println(action)
-;        int idmes = Integer.parseInt( request.getParameter("idMessage"));
+        int idmes = Integer.parseInt( request.getParameter("idMessage"));
         int iduser =(int) request.getSession().getAttribute("idUser");
 
         if (action.equals("a+1")){

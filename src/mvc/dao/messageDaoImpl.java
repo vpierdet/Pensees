@@ -20,9 +20,14 @@ public class messageDaoImpl implements messageDao {
     private static final String SQL_UPDATE_DAG_MOIN ="UPDATE Message SET Disagree = Disagree - 1 WHERE IdMessage = ?";
     private static final String SQL_COUNT_CAT = "SELECT COUNT(*) FROM Message WHERE Categories LIKE  ? ";
     private static final String SQL_COUNT_ALL = "SELECT COUNT(*) FROM Message";
+    private static final String SQL_COUNT_CAT_REPONDU = "SELECT COUNT(*) FROM Message WHERE Categories LIKE  ? AND IdAnswer > -1";
+    private static final String SQL_COUNT_CAT_NONREP = "SELECT COUNT(*) FROM Message WHERE Categories LIKE  ? AND IdAnswer = -1";
     private static final String SQL_UPDATE_ANS = "UPDATE Message SET IdAnswer = ? WHERE IdMessage = ?";
 
     private static final String SQL_SELECT_CATEGORIE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Username ,Date FROM Message WHERE Categories LIKE  ?  ORDER BY Date DESC";
+    private static final String SQL_SELECT_CATEGORIE_PERTINENCE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Username ,Date FROM Message WHERE Categories LIKE  ?  ORDER BY Agree DESC";
+    private static final String SQL_SELECT_CATEGORIE_REPONDU = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Username ,Date FROM Message WHERE Categories LIKE  ? AND IdAnswer > 0 ORDER BY Date DESC";
+    private static final String SQL_SELECT_CATEGORIE_NONREP = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Username ,Date FROM Message WHERE Categories LIKE  ? AND IdAnswer = -1  ORDER BY Date DESC";
     private static final String SQL_SELECT_PERTINENCE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date, Username  FROM Message ORDER BY Agree DESC";
     private static final String SQL_SELECT_DATE = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date, Username  FROM Message ORDER BY Date DESC";
     private static final String SQL_SELECT_AUTHOR = "SELECT TextMessage, Categories, Destinataires, disagree,Agree, FlagModeration,IdMessage,IdAnswer, FlagAnswer, IdUser, FlagNotif, Date, Username  FROM Message WHERE IdUser = ?;";
@@ -206,6 +211,8 @@ public class messageDaoImpl implements messageDao {
 
     }
 
+
+
     @Override
     public void Answer(int idMessage, int idAnswer) {
         Connection connexion = null;
@@ -279,6 +286,35 @@ public class messageDaoImpl implements messageDao {
     }
 
     @Override
+    public int Count(String tri, boolean catego, boolean repondu) {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int total = 0;
+        String SQL = repondu ? SQL_COUNT_CAT_REPONDU : SQL_COUNT_CAT_NONREP ;
+        tri+= "%";
+
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+
+            if (catego) preparedStatement = initialisationRequetePreparee(connexion, SQL, false,tri);
+            else preparedStatement = initialisationRequetePreparee(connexion, SQL, false);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            if (resultSet.next()) {
+                total = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+        }
+        return total;
+    }
+
+
+    @Override
     public ArrayList<message> trouverMessagesCategorie(String categorie, int debut, int fin) throws DAOException {
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
@@ -308,6 +344,72 @@ public class messageDaoImpl implements messageDao {
         return listeMessages;
 
     }
+
+    @Override
+    public ArrayList<message> trouverMessagesCategoriePertinence(String categorie, int debut, int fin) throws DAOException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ArrayList<message> listeMessages = new ArrayList<>();
+        categorie += "%";
+        int i = 0;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee(connexion, SQL_SELECT_CATEGORIE_PERTINENCE, false, categorie);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            while (resultSet.next()) {
+                if (i < debut) i++;
+                else if (i > fin) break;
+                else {
+                    listeMessages.add(map(resultSet));
+                    i++;
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+        }
+        return listeMessages;
+
+    }
+
+
+
+    @Override
+    public ArrayList<message> trouverMessagesCategorieRepondu(String categorie, int debut, int fin, boolean repondu) throws DAOException {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        ArrayList<message> listeMessages = new ArrayList<>();
+        categorie += "%";
+        String SQL = repondu ? SQL_SELECT_CATEGORIE_REPONDU : SQL_SELECT_CATEGORIE_NONREP;
+        int i = 0;
+        try {
+            /* Récupération d'une connexion depuis la Factory */
+            connexion = daoFactory.getConnection();
+            preparedStatement = initialisationRequetePreparee(connexion, SQL, false, categorie);
+            resultSet = preparedStatement.executeQuery();
+            /* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+            while (resultSet.next()) {
+                if (i < debut) i++;
+                else if (i > fin) break;
+                else {
+                    listeMessages.add(map(resultSet));
+                    i++;
+                }
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+        }
+        return listeMessages;
+
+    }
+
 
     /**
      * @return

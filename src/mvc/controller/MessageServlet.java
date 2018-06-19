@@ -106,11 +106,10 @@ public class MessageServlet extends HttpServlet {
             default:break;
         }
 
-
-
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request,response);
     }
 
     private ArrayList<message> getEtat(ArrayList<message> list, HttpServletRequest request) {
