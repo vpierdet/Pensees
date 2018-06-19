@@ -16,6 +16,8 @@ import mvc.model.user;
 @WebServlet(name = "CheckLoginServlet", urlPatterns = {"/checklog"})
 public class CheckLoginServlet extends HttpServlet {
     private static final String CONF_DAO_FACTORY = "daofactory";
+    private static final String VUE_LOG = "/vue/log.jsp";
+    private static final String SERV_MESS = "/MessageServlet";
     private userDao ud;
 
     public void init() {
@@ -42,11 +44,10 @@ public class CheckLoginServlet extends HttpServlet {
                 session.setAttribute("idUser", idUser);
 
                 request.setAttribute("tri", "default");
-                getServletContext().getRequestDispatcher("/MessageServlet").forward(request,response);
+                getServletContext().getRequestDispatcher(SERV_MESS).forward(request,response);
             }
             else{
-                System.out.println("mot de passe erroné");
-                getServletContext().getRequestDispatcher("/log.jsp").forward(request,response);
+                getServletContext().getRequestDispatcher(VUE_LOG).forward(request,response);
             }
         }
 
