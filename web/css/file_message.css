@@ -299,11 +299,13 @@ select {
 
 .suppression{
     margin-right: 0;
+    margin-top: -1%;
     background: none;
     color: #434959;
     font-size: large;
     border: none;
     padding: auto;
-    position:relative;
-    left:35%;
+    position: relative;
+    z-index: 1;
+    float:right;
 }
