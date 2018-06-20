@@ -1,3 +1,11 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: valentin
+  Date: 19/06/2018
+  Time: 20:17
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +22,9 @@
     <h1>Connexion</h1>
     <form action="/MessageServlet" method="POST" id="cof">
         Identifiant: <input id="id" type="text" name="username" required/><br><br>
-        Mot de passe: <input id="ps" type="text" name="password" required/><br>
-        <p id="error" style="display: none"></p>
-        <br><h4><input id="sub" class="boutonValider" type="submit" /></h4>
+        Mot de passe: <input id="ps" type="password" name="password" required/><br>
+        <p id="error" style="display: none; color: #d4190e;"></p>
+        <h4><input id="sub" class="boutonValider" type="submit" /></h4>
     </form></div>
 
 
@@ -54,7 +62,7 @@
                 //	$("h1").text('Le résultat est :' + data);
             })
             .fail(function (data) {
-                alert('ça marche pas');
+                alert('Erreur réseau');
             });
     });
 </script>
